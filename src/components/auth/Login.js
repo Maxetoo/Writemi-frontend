@@ -61,7 +61,7 @@ const Wrapper = styled.article`
 
   img {
     height: 150px;
-    border: solid 1px black;
+    /* border: solid 1px black; */
     border-radius: 5px;
   }
 
@@ -100,7 +100,7 @@ const Wrapper = styled.article`
   }
 
   button {
-    margin-top: 0.7rem;
+    margin-top: 1rem;
     height: 45px;
     width: 95%;
     border: none;
@@ -142,7 +142,7 @@ const Wrapper = styled.article`
     position: absolute;
     top: 4.75rem;
     right: 1.5rem;
-    font-size: 1.3em;
+    font-size: 1.5em;
     opacity: 0.7;
   }
 `

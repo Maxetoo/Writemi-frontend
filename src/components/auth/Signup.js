@@ -53,7 +53,7 @@ const Wrapper = styled.section`
 
   img {
     height: 150px;
-    border: solid 1px black;
+    /* border: solid 1px black; */
     border-radius: 5px;
   }
 
@@ -93,7 +93,7 @@ const Wrapper = styled.section`
   }
 
   button {
-    margin-top: 0.7rem;
+    margin-top: 1rem;
     height: 45px;
     width: 95%;
     border: none;
