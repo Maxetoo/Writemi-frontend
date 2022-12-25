@@ -36,6 +36,11 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  background-image: linear-gradient(
+    174.2deg,
+    rgba(255, 244, 228, 1) 7.1%,
+    rgba(240, 246, 238, 1) 67.4%
+  );
 
   .header {
     width: 70%;
@@ -68,7 +73,6 @@ const Wrapper = styled.section`
   .signup-main--body {
     width: 95%;
     margin-top: 0.5rem;
-    /* padding: 1rem; */
   }
 
   form {
@@ -81,7 +85,7 @@ const Wrapper = styled.section`
 
   input {
     width: 100%;
-    height: 40px;
+    height: 45px;
     margin-top: 0.7rem;
     padding-left: 1rem;
     border-radius: 5px;
@@ -90,7 +94,7 @@ const Wrapper = styled.section`
 
   button {
     margin-top: 0.7rem;
-    height: 40px;
+    height: 45px;
     width: 95%;
     border: none;
     background: #121629;

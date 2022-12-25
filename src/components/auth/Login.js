@@ -61,7 +61,7 @@ const Wrapper = styled.article`
 
   img {
     height: 150px;
-    border: solid 1.5px black;
+    border: solid 1px black;
     border-radius: 5px;
   }
 
@@ -91,7 +91,7 @@ const Wrapper = styled.article`
 
   input {
     width: 100%;
-    height: 40px;
+    height: 45px;
     margin-top: 0.7rem;
     padding-left: 1rem;
     border-radius: 5px;
@@ -101,7 +101,7 @@ const Wrapper = styled.article`
 
   button {
     margin-top: 0.7rem;
-    height: 40px;
+    height: 45px;
     width: 95%;
     border: none;
     background: #121629;
@@ -140,7 +140,7 @@ const Wrapper = styled.article`
 
   .password-icon {
     position: absolute;
-    top: 4.35rem;
+    top: 4.75rem;
     right: 1.5rem;
     font-size: 1.3em;
     opacity: 0.7;
