@@ -97,6 +97,7 @@ const Wrapper = styled.article`
     border-radius: 5px;
     border: solid 1.5px #121629;
     padding-right: 4rem;
+    font-size: 0.9em;
   }
 
   button {
