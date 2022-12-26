@@ -7,6 +7,9 @@ const Welcomeframe = ({ image, header, details }) => {
       <div className='welcome-frame'>
         <div className='header'>
           <img src={image} alt='' />
+          <div className='counter'>
+            {1}/{3}
+          </div>
         </div>
         <div className='welcome-details'>
           <h3>{header}</h3>
@@ -34,6 +37,7 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: end;
     margin-top: 1rem;
+    position: relative;
   }
 
   @media only screen and (min-width: 768px) {
@@ -49,6 +53,21 @@ const Wrapper = styled.div`
     margin: 0.1rem;
     border: solid 1.5px #121629;
     object-position: top;
+  }
+
+  .counter {
+    position: absolute;
+    font-weight: bold;
+    background: #121629;
+    color: var(--white-col);
+    height: 50px;
+    width: 50px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    border: solid 2px black;
+    top: -1rem;
+    left: -1rem;
   }
 
   .welcome-details {

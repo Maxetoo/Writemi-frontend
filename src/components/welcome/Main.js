@@ -14,11 +14,11 @@ const MainBody = () => {
     <Wrapper>
       <WelcomeFrame key={id} image={image} details={details} header={header} />
       <div className='btns-container'>
-        {!slideEnded && (
+        {/* {!slideEnded && (
           <div className='counter'>
             {currentSlide + 1}/{welcomeData.length}
           </div>
-        )}
+        )} */}
         {slideEnded ? (
           <button
             type='button'
@@ -66,7 +66,7 @@ const Wrapper = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   button {
@@ -83,23 +83,13 @@ const Wrapper = styled.article`
   }
 
   .skip {
+    width: 80%;
     margin-top: -1rem;
     opacity: 0.5;
-    font-size: 0.85em;
+    font-size: 1em;
     cursor: pointer;
-    text-decoration: underline;
-  }
-
-  .counter {
-    font-weight: bold;
-    background: #121629;
-    color: var(--white-col);
-    height: 40px;
-    width: 40px;
-    display: grid;
-    place-content: center;
-    border-radius: 50%;
-    border: solid 2px black;
+    /* text-decoration: underline; */
+    text-align: start;
   }
 `
 
