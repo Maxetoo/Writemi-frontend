@@ -103,7 +103,7 @@ const Wrapper = styled.section`
   }
 
   h3 {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
   .signup-main--body {
