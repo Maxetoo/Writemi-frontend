@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeSlide } from '../../slices/eventSlice'
 import { Link, useNavigate } from 'react-router-dom'
+// AiOutlineArrowRight
+import { AiOutlineArrowRight } from 'react-icons/ai'
 const MainBody = () => {
   const { currentSlide, slideEnded } = useSelector((store) => store.event)
   const dispatch = useDispatch()
@@ -34,6 +36,7 @@ const MainBody = () => {
             onClick={() => dispatch(changeSlide(welcomeData.length - 1))}
           >
             Next
+            <AiOutlineArrowRight className='arrow' />
           </button>
         )}
       </div>
@@ -60,7 +63,7 @@ const Wrapper = styled.article`
   background: var(--welcome-page-bg);
 
   .btns-container {
-    margin-top: -0.5rem;
+    margin-top: -1rem;
     width: 100%;
     padding: 2rem;
     display: flex;
@@ -72,7 +75,7 @@ const Wrapper = styled.article`
   button {
     color: var(--white-col);
     background: #ff8906;
-    width: 200px;
+    width: 100%;
     height: 50px;
     font-size: 0.9em;
     border: solid 2px #121629;
@@ -80,6 +83,15 @@ const Wrapper = styled.article`
     position: relative;
     cursor: pointer;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrow {
+    margin-left: 1rem;
+    font-size: 1em;
   }
 
   .skip {
@@ -88,8 +100,8 @@ const Wrapper = styled.article`
     opacity: 0.5;
     font-size: 1em;
     cursor: pointer;
-    /* text-decoration: underline; */
-    text-align: end;
+    text-decoration: underline;
+    text-align: center;
   }
 `
 
