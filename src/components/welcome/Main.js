@@ -36,7 +36,6 @@ const MainBody = () => {
             onClick={() => dispatch(changeSlide(welcomeData.length - 1))}
           >
             Next
-            <AiOutlineArrowRight className='arrow' />
           </button>
         )}
       </div>
@@ -60,7 +59,14 @@ const Wrapper = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--welcome-page-bg);
+  /* background: var(--welcome-page-bg); */
+  /* background-image: linear-gradient(
+    174.2deg,
+    rgba(255, 244, 228, 1) 7.1%,
+    rgba(240, 246, 238, 1) 67.4%
+  ); */
+  background: #121629;
+  color: white;
 
   .btns-container {
     margin-top: -1rem;
@@ -96,9 +102,9 @@ const Wrapper = styled.article`
 
   .skip {
     width: 80%;
-    margin-top: -1rem;
+    margin-top: -0.5rem;
     opacity: 0.5;
-    font-size: 1em;
+    font-size: 0.9em;
     cursor: pointer;
     text-decoration: underline;
     text-align: center;

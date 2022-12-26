@@ -16,8 +16,10 @@ const Wrapper = styled.section`
   .welcome-page {
     height: 100vh;
     width: 100vw;
-    background: var(--welcome-page-bg);
-    color: var(--welcome-texts);
+    background: #121629;
+    color: white;
+    /* background: var(--welcome-page-bg);
+    color: var(--welcome-texts); */
   }
 `
 export default WelcomePage

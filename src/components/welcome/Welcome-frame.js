@@ -58,14 +58,16 @@ const Wrapper = styled.div`
   .counter {
     position: absolute;
     font-weight: bold;
-    background: #121629;
-    color: var(--white-col);
+    /* background: #121629; */
+    background: white;
+    /* color: var(--white-col); */
+    color: black;
     height: 55px;
     width: 55px;
     display: grid;
     place-content: center;
     border-radius: 50%;
-    border: solid 2px black;
+    border: solid 5px black;
     top: -1rem;
     left: -1rem;
   }
