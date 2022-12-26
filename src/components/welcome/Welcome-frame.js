@@ -60,8 +60,8 @@ const Wrapper = styled.div`
     font-weight: bold;
     background: #121629;
     color: var(--white-col);
-    height: 50px;
-    width: 50px;
+    height: 55px;
+    width: 55px;
     display: grid;
     place-content: center;
     border-radius: 50%;

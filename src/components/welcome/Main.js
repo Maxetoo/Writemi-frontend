@@ -66,15 +66,15 @@ const Wrapper = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   button {
     color: var(--white-col);
     background: #ff8906;
-    width: 100px;
+    width: 200px;
     height: 50px;
-    font-size: 0.8em;
+    font-size: 0.9em;
     border: solid 2px #121629;
     border-radius: 5px;
     position: relative;
@@ -89,7 +89,7 @@ const Wrapper = styled.article`
     font-size: 1em;
     cursor: pointer;
     /* text-decoration: underline; */
-    text-align: start;
+    text-align: end;
   }
 `
 
