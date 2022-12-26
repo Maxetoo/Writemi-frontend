@@ -45,14 +45,14 @@ const Signup = () => {
           <div className='main-password' onClick={togglePasswordVisibility}>
             {passwordActive ? <AiFillEye /> : <AiFillEyeInvisible />}
           </div>
-          <input
+          {/* <input
             type='password'
             ref={confirmBtn}
             placeholder='confirm password'
           />
           <div className='confirm-password' onClick={toggleConfirmPassword}>
             {confirmActive ? <AiFillEye /> : <AiFillEyeInvisible />}
-          </div>
+          </div> */}
         </form>
       </div>
       <button type='button'>Register</button>
