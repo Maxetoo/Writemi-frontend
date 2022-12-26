@@ -90,6 +90,7 @@ const Wrapper = styled.section`
     height: 150px;
     /* border: solid 1px black; */
     border-radius: 5px;
+    margin-top: -1.5rem;
   }
 
   .header-title {
@@ -102,7 +103,7 @@ const Wrapper = styled.section`
   }
 
   h3 {
-    font-size: 1.1em;
+    font-size: 1.5em;
   }
 
   .signup-main--body {

@@ -64,6 +64,10 @@ const Wrapper = styled.article`
     rgba(240, 246, 238, 1) 67.4%
   );
 
+  h3 {
+    font-size: 1.5em;
+  }
+
   .header {
     width: 70%;
     height: auto;
