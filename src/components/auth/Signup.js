@@ -34,7 +34,7 @@ const Signup = () => {
     <Wrapper>
       <div className='header'>
         <img src={Sammy} alt='signup illustration' />
-        <h3 className='header-title'>Writemi</h3>
+        {/* <h3 className='header-title'>Writemi</h3> */}
       </div>
       <div className='signup-main--body'>
         <h3>Signup</h3>

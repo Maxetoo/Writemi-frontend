@@ -22,7 +22,7 @@ const Login = () => {
     <Wrapper>
       <div className='header'>
         <img src={Sammy} alt='signup illustration' />
-        <h3 className='header-title'>Writemi..</h3>
+        {/* <h3 className='header-title'>Writemi..</h3> */}
       </div>
       <div className='login-main--body'>
         <h3>Login</h3>
@@ -58,7 +58,6 @@ const Wrapper = styled.article`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  border: solid 1.5px black;
   background-image: linear-gradient(
     174.2deg,
     rgba(255, 244, 228, 1) 7.1%,
