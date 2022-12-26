@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Sammy from '../../assets/Images/sammy-line-boy-in-a-hat-writes-a-book.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 const Login = () => {
   const [active, setActive] = useState(true)
   const iconBtn = useRef()
+
   const toggleVisibility = () => {
     let type = iconBtn.current.type
     if (type === 'password') {
@@ -33,8 +34,9 @@ const Login = () => {
             className='password-input'
             ref={iconBtn}
           />
+
           <div className='password-icon' onClick={toggleVisibility}>
-            {active ? <AiFillEyeInvisible /> : <AiFillEye />}
+            {active ? <AiFillEye /> : <AiFillEyeInvisible />}
           </div>
         </form>
       </div>

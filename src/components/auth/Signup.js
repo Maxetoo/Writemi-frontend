@@ -1,14 +1,34 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Sammy from '../../assets/Images/sammy-line-boy-in-a-hat-writes-a-book.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { AiOutlineMail } from 'react-icons/ai'
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 const Signup = () => {
-  const iconBtn = useRef()
-  const toggleVisibility = () => {
-    const type = iconBtn.current.type
-    console.log(type)
+  const passwordBtn = useRef()
+  const confirmBtn = useRef()
+  const [passwordActive, setActive] = useState(true)
+  const [confirmActive, setConfirmActive] = useState(true)
+
+  const togglePasswordVisibility = () => {
+    let type = passwordBtn.current.type
+    if (type === 'password') {
+      passwordBtn.current.type = 'text'
+      setActive(false)
+    } else {
+      passwordBtn.current.type = 'password'
+      setActive(true)
+    }
+  }
+  const toggleConfirmPassword = () => {
+    let type = confirmBtn.current.type
+    if (type === 'password') {
+      confirmBtn.current.type = 'text'
+      setConfirmActive(false)
+    } else {
+      confirmBtn.current.type = 'password'
+      setConfirmActive(true)
+    }
   }
   return (
     <Wrapper>
@@ -21,8 +41,18 @@ const Signup = () => {
         <form>
           <input type='text' placeholder='username' />
           <input type='email' placeholder='email' />
-          <input type='password' placeholder='password' ref={iconBtn} />
-          <input type='password' placeholder='confirm password' />
+          <input type='password' placeholder='password' ref={passwordBtn} />
+          <div className='main-password' onClick={togglePasswordVisibility}>
+            {passwordActive ? <AiFillEye /> : <AiFillEyeInvisible />}
+          </div>
+          <input
+            type='password'
+            ref={confirmBtn}
+            placeholder='confirm password'
+          />
+          <div className='confirm-password' onClick={toggleConfirmPassword}>
+            {confirmActive ? <AiFillEye /> : <AiFillEyeInvisible />}
+          </div>
         </form>
       </div>
       <button type='button'>Register</button>
@@ -86,6 +116,7 @@ const Wrapper = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
 
   input {
@@ -95,7 +126,7 @@ const Wrapper = styled.section`
     padding-left: 1rem;
     border-radius: 5px;
     border: solid 1.5px #121629;
-    font-size: 0.9em;
+    font-size: 0.95em;
   }
 
   button {
@@ -131,6 +162,24 @@ const Wrapper = styled.section`
 
   .footer:hover {
     opacity: 0.8;
+  }
+
+  .main-password {
+    position: absolute;
+    top: 8.2rem;
+    right: 1.5rem;
+    font-size: 1.5em;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .confirm-password {
+    position: absolute;
+    top: 11.7rem;
+    right: 1.5rem;
+    font-size: 1.5em;
+    opacity: 0.7;
+    cursor: pointer;
   }
 
   @media only screen and (min-width: 768px) {
