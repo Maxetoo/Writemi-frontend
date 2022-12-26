@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import Sammy from '../../assets/Images/sammy-line-boy-in-a-hat-writes-a-book.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 const Login = () => {
+  const [active, setActive] = useState(true)
+  const iconBtn = useRef()
+  const toggleVisibility = () => {
+    let type = iconBtn.current.type
+    if (type === 'password') {
+      iconBtn.current.type = 'text'
+      setActive(false)
+    } else {
+      iconBtn.current.type = 'password'
+      setActive(true)
+    }
+  }
   return (
     <Wrapper>
       <div className='header'>
@@ -19,10 +31,10 @@ const Login = () => {
             type='password'
             placeholder='password'
             className='password-input'
+            ref={iconBtn}
           />
-          <div className='password-icon'>
-            {/* <AiFillEyeInvisible /> */}
-            <AiFillEye />
+          <div className='password-icon' onClick={toggleVisibility}>
+            {active ? <AiFillEyeInvisible /> : <AiFillEye />}
           </div>
         </form>
       </div>
@@ -97,7 +109,7 @@ const Wrapper = styled.article`
     border-radius: 5px;
     border: solid 1.5px #121629;
     padding-right: 4rem;
-    font-size: 0.9em;
+    font-size: 0.95em;
   }
 
   button {
@@ -145,6 +157,33 @@ const Wrapper = styled.article`
     right: 1.5rem;
     font-size: 1.5em;
     opacity: 0.7;
+    cursor: pointer;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .login-main--body {
+      width: 50%;
+    }
+
+    input {
+      height: 50px;
+      margin-top: 0.9rem;
+    }
+
+    button {
+      width: 50%;
+      height: 50px;
+      margin-top: 1rem;
+    }
+
+    a > .footer {
+      margin-top: 1.5rem;
+    }
+
+    .password-icon {
+      top: 5.5rem;
+      right: 1.5rem;
+    }
   }
 `
 

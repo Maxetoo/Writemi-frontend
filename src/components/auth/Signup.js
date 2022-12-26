@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import Sammy from '../../assets/Images/sammy-line-boy-in-a-hat-writes-a-book.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineMail } from 'react-icons/ai'
 
 const Signup = () => {
+  const iconBtn = useRef()
+  const toggleVisibility = () => {
+    const type = iconBtn.current.type
+    console.log(type)
+  }
   return (
     <Wrapper>
       <div className='header'>
@@ -16,7 +21,7 @@ const Signup = () => {
         <form>
           <input type='text' placeholder='username' />
           <input type='email' placeholder='email' />
-          <input type='password' placeholder='password' />
+          <input type='password' placeholder='password' ref={iconBtn} />
           <input type='password' placeholder='confirm password' />
         </form>
       </div>
