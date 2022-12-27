@@ -17,7 +17,8 @@ const Wrapper = styled.section`
     height: 100vh;
     width: 100vw;
     background: #121629;
-    color: white;
+    color: #777777;
+    /* color: white; */
     /* background: var(--welcome-page-bg);
     color: var(--welcome-texts); */
   }

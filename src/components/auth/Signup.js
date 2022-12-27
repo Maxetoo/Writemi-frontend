@@ -6,9 +6,7 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 const Signup = () => {
   const passwordBtn = useRef()
-  const confirmBtn = useRef()
   const [passwordActive, setActive] = useState(true)
-  const [confirmActive, setConfirmActive] = useState(true)
 
   const togglePasswordVisibility = () => {
     let type = passwordBtn.current.type
@@ -20,21 +18,11 @@ const Signup = () => {
       setActive(true)
     }
   }
-  const toggleConfirmPassword = () => {
-    let type = confirmBtn.current.type
-    if (type === 'password') {
-      confirmBtn.current.type = 'text'
-      setConfirmActive(false)
-    } else {
-      confirmBtn.current.type = 'password'
-      setConfirmActive(true)
-    }
-  }
+
   return (
     <Wrapper>
       <div className='header'>
         <img src={Sammy} alt='signup illustration' />
-        {/* <h3 className='header-title'>Writemi</h3> */}
       </div>
       <div className='signup-main--body'>
         <h3>Signup</h3>
@@ -45,14 +33,6 @@ const Signup = () => {
           <div className='main-password' onClick={togglePasswordVisibility}>
             {passwordActive ? <AiFillEye /> : <AiFillEyeInvisible />}
           </div>
-          {/* <input
-            type='password'
-            ref={confirmBtn}
-            placeholder='confirm password'
-          />
-          <div className='confirm-password' onClick={toggleConfirmPassword}>
-            {confirmActive ? <AiFillEye /> : <AiFillEyeInvisible />}
-          </div> */}
         </form>
       </div>
       <button type='button'>Register</button>
@@ -201,6 +181,10 @@ const Wrapper = styled.section`
 
     a > .footer {
       margin-top: 1.5rem;
+    }
+
+    .main-password {
+      top: 9.5rem;
     }
   }
 `

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { welcomeData } from './Data'
 import WelcomeFrame from './Welcome-frame'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeSlide } from '../../slices/eventSlice'
-import { Link, useNavigate } from 'react-router-dom'
-// AiOutlineArrowRight
-import { AiOutlineArrowRight } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 const MainBody = () => {
   const { currentSlide, slideEnded } = useSelector((store) => store.event)
   const dispatch = useDispatch()
@@ -16,11 +14,6 @@ const MainBody = () => {
     <Wrapper>
       <WelcomeFrame key={id} image={image} details={details} header={header} />
       <div className='btns-container'>
-        {/* {!slideEnded && (
-          <div className='counter'>
-            {currentSlide + 1}/{welcomeData.length}
-          </div>
-        )} */}
         {slideEnded ? (
           <button
             type='button'
@@ -59,14 +52,8 @@ const Wrapper = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background: var(--welcome-page-bg); */
-  /* background-image: linear-gradient(
-    174.2deg,
-    rgba(255, 244, 228, 1) 7.1%,
-    rgba(240, 246, 238, 1) 67.4%
-  ); */
   background: #121629;
-  color: white;
+  color: var(--white-col);
 
   .btns-container {
     margin-top: -1rem;
@@ -108,6 +95,13 @@ const Wrapper = styled.article`
     cursor: pointer;
     text-decoration: underline;
     text-align: center;
+  }
+
+  @media only screen and (min-width: 768px) {
+    button {
+      width: 50%;
+      height: 55px;
+    }
   }
 `
 

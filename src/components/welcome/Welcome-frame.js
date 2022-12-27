@@ -1,15 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import { welcomeData } from './Data'
 
 const Welcomeframe = ({ image, header, details }) => {
+  const { currentSlide, slideEnded } = useSelector((store) => store.event)
   return (
     <Wrapper>
       <div className='welcome-frame'>
         <div className='header'>
           <img src={image} alt='' />
-          <div className='counter'>
-            {1}/{3}
-          </div>
+          {!slideEnded && (
+            <div className='counter'>
+              {currentSlide + 1}/{welcomeData.length}
+            </div>
+          )}
         </div>
         <div className='welcome-details'>
           <h3>{header}</h3>
