@@ -17,8 +17,12 @@ const Error = () => {
 const Wrapper = styled.section`
   height: 100vh;
   width: 100vw;
-  background: #252525;
-  color: var(--white-col);
+  background-image: linear-gradient(
+    174.2deg,
+    rgba(255, 244, 228, 1) 7.1%,
+    rgba(240, 246, 238, 1) 67.4%
+  );
+
   display: flex;
   flex-direction: column;
   align-items: center;
