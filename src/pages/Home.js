@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Header, Dashboard } from '../components/home'
 import { Link } from 'react-router-dom'
 const Home = () => {
   return (
     <Wrapper>
-      <div>max</div>
+      <Header />
+      <Dashboard />
     </Wrapper>
   )
 }

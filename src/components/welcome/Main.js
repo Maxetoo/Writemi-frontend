@@ -67,9 +67,8 @@ const Wrapper = styled.article`
 
   button {
     color: var(--white-col);
-    /* background: #ff8906; */
-    background: #8dbbff;
-    color: black;
+    background: #ff8906;
+    color: #000000;
     width: 100%;
     height: 50px;
     font-size: 0.9em;

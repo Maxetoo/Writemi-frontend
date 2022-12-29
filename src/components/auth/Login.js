@@ -58,16 +58,13 @@ const Wrapper = styled.article`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: #23293d;
-  color: var(--white-col);
-  /* background-image: linear-gradient(
+  background-image: linear-gradient(
     174.2deg,
     rgba(255, 244, 228, 1) 7.1%,
     rgba(240, 246, 238, 1) 67.4%
-  ); */
+  );
 
   h3 {
-    color: #8dbbff;
     font-size: 1.3em;
   }
 
@@ -126,23 +123,21 @@ const Wrapper = styled.article`
     height: 45px;
     width: 95%;
     border: none;
-    /* background: #121629; */
-    background: #8dbbff;
-    color: black;
-    /* color: var(--white-col); */
+    background: #121629;
+    color: var(--white-col);
     font-size: 0.9em;
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
   }
 
-  /* button:hover {
+  button:hover {
     background: #090c1d;
-  } */
+  }
 
   a {
     text-decoration: none;
-    color: white;
+    color: black;
   }
 
   a > .footer {
