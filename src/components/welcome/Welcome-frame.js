@@ -58,6 +58,7 @@ const Wrapper = styled.div`
     margin: 0.1rem;
     border: solid 1.5px #121629;
     object-position: top;
+    background: whitesmoke;
   }
 
   .counter {

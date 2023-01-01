@@ -56,7 +56,6 @@ const Wrapper = styled.section`
     justify-content: center;
     border-radius: 5px;
     border: solid 1px black;
-    /* box-shadow: 1px 3px 1px black; */
     box-shadow: 1px 1px 1px #999999;
   }
 
@@ -89,13 +88,13 @@ const Wrapper = styled.section`
     border-radius: 5px;
     border: solid 1px black;
     cursor: pointer;
-    background: #121629;
+    background: var(--btn-bg);
     color: var(--white-col);
     font-size: 1em;
   }
 
   a {
-    color: black;
+    color: var(--black-col);
     text-decoration: none;
   }
 

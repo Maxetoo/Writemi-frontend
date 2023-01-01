@@ -7,7 +7,7 @@ const Error = () => {
     <Wrapper>
       <h1>404 Error</h1>
       <p>Page not found!</p>
-      <Link to='/login'>
+      <Link to='/home'>
         <button type='button'>Go Back</button>
       </Link>
     </Wrapper>

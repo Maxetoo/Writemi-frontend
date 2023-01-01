@@ -10,6 +10,7 @@
 body {
     -webkit-tap-highlight-color: transparent;
     font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: var(--home-page-bg);
 }
 
 button {

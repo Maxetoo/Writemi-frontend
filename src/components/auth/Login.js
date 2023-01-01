@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import Sammy from '../../assets/Images/sammy-line-boy-in-a-hat-writes-a-book.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 const Login = () => {
@@ -22,7 +22,6 @@ const Login = () => {
     <Wrapper>
       <div className='header'>
         <img src={Sammy} alt='signup illustration' />
-        {/* <h3 className='header-title'>Writemi..</h3> */}
       </div>
       <div className='login-main--body'>
         <h3>Login</h3>

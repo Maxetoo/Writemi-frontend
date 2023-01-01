@@ -14,12 +14,18 @@ const Header = () => {
 }
 
 const Wrapper = styled.header`
-  height: 40px;
-  padding: 3rem 2rem 3rem 2rem;
+  height: 30px;
+  width: 100%;
+  padding: 3rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  /* border-bottom: solid 1px white; */
+  z-index: 1000;
+  /* background: black; */
 
   .menu-btn {
     background: white;
