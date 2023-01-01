@@ -67,7 +67,7 @@ const Wrapper = styled.article`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem;
   margin-top: 7rem;
   z-index: -1;
   /* position: relative; */
@@ -88,9 +88,8 @@ const Wrapper = styled.article`
   .dashboard-container {
     background: #ffab91;
     width: 100%;
-    height: 425px;
+    height: 450px;
     border-radius: 15px;
-    /* border: solid 2px black; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,11 +114,11 @@ const Wrapper = styled.article`
     margin-bottom: 1rem;
     border-radius: 10px;
     overflow: hidden;
-    padding-left: 2rem;
+    padding-left: 1rem;
   }
 
   button {
-    width: 30%;
+    width: 20%;
     background: none;
     color: white;
     border: none;
@@ -134,7 +133,7 @@ const Wrapper = styled.article`
 
   .home-nav--list {
     width: 100%;
-    height: 45px;
+    height: 50px;
     display: flex;
     font-size: 1em;
     flex-direction: row;
@@ -142,7 +141,7 @@ const Wrapper = styled.article`
     justify-content: flex-start;
     margin: 0.5rem;
     background: white;
-    border-radius: 20px;
+    border-radius: 5px;
     text-decoration: none;
     padding-left: 1.5rem;
     color: black;
