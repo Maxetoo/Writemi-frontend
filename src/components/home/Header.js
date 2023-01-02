@@ -83,7 +83,7 @@ const Wrapper = styled.header`
 
   .dashboard {
     width: 80%;
-    height: 150px;
+    height: 170px;
     background: white;
     margin-top: 8rem;
     border-radius: 20px;
