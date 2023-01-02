@@ -148,6 +148,7 @@ const Wrapper = styled.header`
     font-size: 0.7em;
     margin-top: 0.5rem;
     text-align: center;
+    width: 70%;
   }
 `
 export default Header
