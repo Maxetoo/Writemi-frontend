@@ -20,7 +20,7 @@ export const HomePageData = [
   },
   {
     id: 1,
-    link: 'groupMessages',
+    link: 'spaces',
     icon: <FaUsers />,
     text: 'View Spaces',
     bg: '#000000',
