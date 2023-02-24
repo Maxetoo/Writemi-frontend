@@ -13,7 +13,7 @@ const Onboarding = ({ image, alt, title, message }) => {
 
 const Wrapper = styled.article`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  height: 100%;
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,10 +21,9 @@ const Wrapper = styled.article`
   color: var(--white-col);
 
   img {
-    width: 90%;
+    width: 100%;
     height: 250px;
     object-fit: cover;
-    margin-top: 1.5rem;
     border: solid 2px white;
   }
 

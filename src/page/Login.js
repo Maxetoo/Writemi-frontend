@@ -15,7 +15,7 @@ const Login = () => {
     <Wrapper>
       <img src={HalfLogo} alt='writeme-logo' />
       <h2>Welcome</h2>
-      <p>sign in to continue</p>
+      <p className='sign'>sign in to continue</p>
       <form>
         <div className='username-container'>
           <div className='user-icon'>
@@ -63,9 +63,13 @@ const Wrapper = styled.section`
     font-size: 2.3em;
   }
 
+  .sign {
+    font-size: 1.3em;
+  }
+
   form {
     margin: 1.5rem;
-    width: 75%;
+    width: 90%;
   }
 
   form div {
@@ -74,21 +78,21 @@ const Wrapper = styled.section`
 
   input {
     width: 100%;
-    height: 45px;
+    height: 55px;
     margin-top: 0.7rem;
-    padding-left: 2.5rem;
+    padding-left: 3rem;
     border-radius: 5px;
     /* border: solid 1.5px #121629; */
-    border: solid 1.5px #6b6b6b;
+    border: solid 1px var(--login-secondary);
     padding-right: 4rem;
-    font-size: 0.95em;
+    font-size: 1.1em;
     background: var(--input-bg);
     outline: none;
   }
 
   .user-icon {
     position: absolute;
-    top: 1.15rem;
+    top: 1.6rem;
     left: 0.6rem;
     font-size: 1.5em;
     opacity: 0.8;
@@ -96,7 +100,7 @@ const Wrapper = styled.section`
 
   .password-icon {
     position: absolute;
-    top: 1.15rem;
+    top: 1.6rem;
     left: 0.6rem;
     font-size: 1.5em;
     opacity: 0.8;
@@ -104,7 +108,7 @@ const Wrapper = styled.section`
 
   .password-toggle {
     position: absolute;
-    top: 1.2rem;
+    top: 1.6rem;
     right: 1.5rem;
     font-size: 1.5em;
     opacity: 0.7;
@@ -112,9 +116,9 @@ const Wrapper = styled.section`
   }
 
   button {
-    margin-top: 1rem;
-    height: 45px;
-    width: 75%;
+    margin: 1rem;
+    height: 50px;
+    width: 90%;
     border: none;
     background: var(--login-secondary);
     color: var(--white-col);
