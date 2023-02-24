@@ -1,15 +1,23 @@
 :root {
-    --dark-bg: #252525;
-    --white-col: #ffffff;
-    --black-col: #000000;
-    --welcome-page-bg: #eff0f3;
-    --home-page-bg: #292929;
-    --welcome-texts: #2a2a2a;
-    --stroke: #0d0d0d;
-    --btn-bg: #121629;
-    --pink: #ffab91;
-    --yellow: #ffcc80;
-    --lemon: #e8ed9b;
-    --purple: #d094da;
-    --blue: #82deeb;
+  --dark-bg: #252525;
+  --white-col: #ffffff;
+  --black-col: #000000;
+  --welcome-page-bg: #eff0f3;
+  --home-page-bg: #292929;
+  --welcome-texts: #2a2a2a;
+  --stroke: #0d0d0d;
+  --btn-bg: #121629;
+  --pink: #ffab91;
+  --yellow: #ffcc80;
+  --lemon: #e8ed9b;
+  --purple: #d094da;
+  --blue: #82deeb;
+  --login-page: #ffffff;
+  --login-secondary: #1c1c64;
+  --input-bg: #fafafa;
+  --signup-page: #ffffff;
+  --signup-secondary: #1c1c64;
+  --secondary: #1c1c64;
+  --secondary-home: #0a0a38;
+  --dark-secondary: #121629;
 }

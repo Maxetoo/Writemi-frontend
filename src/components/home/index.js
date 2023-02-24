@@ -1,6 +1,4 @@
-import Header from './Header'
-import Body from './Body'
-import Dashboard from './Home-main'
-import Footer from './Footer'
+import Navbar from './Navbar'
+import Homemain from './Homemain'
 
-export { Header, Dashboard, Body, Footer }
+export { Navbar, Homemain }
