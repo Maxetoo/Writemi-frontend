@@ -37,9 +37,6 @@ const Onboarding = () => {
           return <OnboardingSlide {...value} key={index} />
         })}
       </Slider>
-      <button type='button' ref={btn} onClick={navigatePage}>
-        {slideIndex === onBoardingData.length - 1 ? 'Get started' : 'Skip'}
-      </button>
       <div className='btn-container'>
         {onBoardingData.map((value, index) => {
           return (
@@ -51,6 +48,9 @@ const Onboarding = () => {
           )
         })}
       </div>
+      <button type='button' ref={btn} onClick={navigatePage}>
+        {slideIndex === onBoardingData.length - 1 ? 'Get started' : 'Skip'}
+      </button>
     </Wrapper>
   )
 }
@@ -68,7 +68,7 @@ const Wrapper = styled.section`
   padding: 1rem;
 
   .btn-container {
-    margin: 1rem;
+    margin: 1.5rem;
     width: 80%;
     display: flex;
     flex-direction: row;

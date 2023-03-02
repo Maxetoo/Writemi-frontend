@@ -30,6 +30,7 @@ const Wrapper = styled.article`
   h3 {
     font-size: 1.5em;
     margin: 1.5rem;
+    text-align: center;
   }
 
   p {
