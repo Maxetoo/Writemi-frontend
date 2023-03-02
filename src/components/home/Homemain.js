@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { IoMdNotifications } from 'react-icons/io'
 import { RxCopy } from 'react-icons/rx'
 import { homeData, socials } from '../../services/homeData'
+import Logo from '../../assets/images/half-logo.png'
 // RxCopy
 const Homemain = () => {
   return (
@@ -11,6 +12,7 @@ const Homemain = () => {
         <div></div>
         <IoMdNotifications />
       </div> */}
+      <img src={Logo} alt='logo' />
       <h3>Maxeto's Profile</h3>
       <div className='link-board'>
         <p className='link-name'>writeme/maxeto/profile</p>
@@ -60,6 +62,10 @@ const Wrapper = styled.article`
   padding: 1rem;
   padding-bottom: 7rem;
 
+  img {
+    margin-top: 1.5rem;
+  }
+
   h3 {
     margin: 1rem;
   }
@@ -95,7 +101,7 @@ const Wrapper = styled.article`
 
   .navigation-container {
     width: 90%;
-    height: 250px;
+    height: 300px;
     margin: 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -116,30 +122,25 @@ const Wrapper = styled.article`
     justify-content: center;
     color: var(--white-col);
     /* background: #0a0a36; */
-    background: #bbd1f4;
-    color: black;
-    opacity: 0.8;
-  }
-
-  .nav-btn:hover {
-    /* background: #bbd1f4;
-    color: #000000; */
-    /* background: #05059b; */
-    background: white;
-    border: none;
-    transition: 0.5s all;
+    /* background: #bbd1f4; */
+    background: #435c6d;
+    color: white;
+    /* color: black; */
+    /* opacity: 0.8; */
   }
 
   .nav-icon {
     font-size: 1.5em;
-    font-weight: bold;
-    color: #090933;
+    /* font-weight: bold; */
+    /* color: #090933; */
+    /* color: white; */
   }
 
   .nav-title {
     font-size: 0.8em;
     text-align: center;
     width: 50%;
+    opacity: 0.75;
   }
 
   .btn-container {
@@ -192,12 +193,12 @@ const Wrapper = styled.article`
 
     .navigation-container {
       width: 550px;
+      height: 350px;
     }
 
     .nav-btn {
       width: 100%;
-      height: 130px;
-      margin-right: 2rem;
+      height: 150px;
     }
 
     .btn-container {

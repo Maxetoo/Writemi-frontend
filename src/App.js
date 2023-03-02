@@ -8,6 +8,9 @@ import {
   ResetPassword,
   ForgotPassword,
   Onboarding,
+  PersonalMessages,
+  GroupMessages,
+  Profile,
 } from './page'
 
 import { RedirectPage, ResetPasswordSuccess } from './components/password-flow'
@@ -18,6 +21,9 @@ const App = () => {
       <main className='main-app'>
         <Routes>
           <Route path='/home' element={<Home />} />
+          <Route path='/messages' element={<PersonalMessages />} />
+          <Route path='/groups' element={<GroupMessages />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/onboarding' element={<Onboarding />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />

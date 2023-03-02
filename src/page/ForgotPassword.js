@@ -39,26 +39,26 @@ const Wrapper = styled.section`
   }
 
   form {
-    width: 80%;
+    width: 90%;
   }
 
   input {
     width: 100%;
-    height: 45px;
+    height: 55px;
     margin-top: 0.7rem;
     padding-left: 2.5rem;
     border-radius: 20px;
     border: solid 1.5px #6b6b6b;
     padding-right: 4rem;
-    font-size: 0.95em;
+    font-size: 1.1em;
     background: var(--input-bg);
     outline: none;
   }
 
   button {
     margin-top: 4rem;
-    height: 45px;
-    width: 75%;
+    height: 50px;
+    width: 90%;
     border: none;
     background: var(--login-secondary);
     color: var(--white-col);

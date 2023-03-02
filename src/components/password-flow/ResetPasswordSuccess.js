@@ -43,14 +43,14 @@ const Wrapper = styled.section`
 
   a > button {
     margin-top: 1rem;
-    height: 45px;
-    width: 75%;
+    height: 50px;
+    width: 90%;
     border: none;
     background: var(--login-secondary);
     color: var(--white-col);
     font-size: 0.9em;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 1.2em;
   }
