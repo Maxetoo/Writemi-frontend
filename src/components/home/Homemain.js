@@ -123,26 +123,18 @@ const Wrapper = styled.article`
     align-items: center;
     justify-content: flex-start;
     padding: 1rem;
-    /* color: var(--white-col); */
     margin-top: 1rem;
-    /* background: #0a0a36; */
     background: #bbd1f4;
-    /* background: #435c6d; */
-    /* color: white; */
-    color: black;
-    /* opacity: 0.8; */
+    color: #000000;
   }
 
   .nav-icon {
     font-size: 1.2em;
-    /* font-weight: bold; */
-    /* color: #090933; */
-    /* color: white; */
   }
 
   .nav-title {
     font-size: 0.9em;
-    width: 50%;
+    width: 100%;
     margin-left: 1rem;
   }
 

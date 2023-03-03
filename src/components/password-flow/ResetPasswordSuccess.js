@@ -17,7 +17,7 @@ const ResetPasswordSuccess = () => {
 }
 
 const Wrapper = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   padding: 1rem;
   display: flex;

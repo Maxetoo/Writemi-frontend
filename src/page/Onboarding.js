@@ -21,6 +21,17 @@ const Onboarding = () => {
 
   return (
     <Wrapper>
+      <div className='btn-container'>
+        {onBoardingData.map((value, index) => {
+          return (
+            <div
+              key={index}
+              className={`line ${index <= slideIndex ? 'active' : ''}`}
+              onClick={() => navigateSlides(index)}
+            ></div>
+          )
+        })}
+      </div>
       <Slider
         onSlideComplete={(i) => {
           setSlideIndex(i)
@@ -37,17 +48,7 @@ const Onboarding = () => {
           return <OnboardingSlide {...value} key={index} />
         })}
       </Slider>
-      <div className='btn-container'>
-        {onBoardingData.map((value, index) => {
-          return (
-            <div
-              key={index}
-              className={`line ${index <= slideIndex ? 'active' : ''}`}
-              onClick={() => navigateSlides(index)}
-            ></div>
-          )
-        })}
-      </div>
+
       <button type='button' ref={btn} onClick={navigatePage}>
         {slideIndex === onBoardingData.length - 1 ? 'Get started' : 'Skip'}
       </button>
@@ -60,7 +61,7 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background: var(--dark-secondary);
   color: var(--white-col);
@@ -68,7 +69,7 @@ const Wrapper = styled.section`
   padding: 1rem;
 
   .btn-container {
-    margin: 1.5rem;
+    margin: 1rem;
     width: 80%;
     display: flex;
     flex-direction: row;
