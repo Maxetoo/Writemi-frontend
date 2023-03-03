@@ -19,6 +19,7 @@ const Wrapper = styled.article`
   flex-direction: column;
   align-items: center;
   color: var(--white-col);
+  margin-top: -1rem;
 
   img {
     width: 100%;

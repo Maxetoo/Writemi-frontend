@@ -78,7 +78,7 @@ const Wrapper = styled.section`
   }
 
   button {
-    margin-bottom: 2.5rem;
+    margin: 3rem;
     height: 55px;
     width: 75%;
     border: none;
