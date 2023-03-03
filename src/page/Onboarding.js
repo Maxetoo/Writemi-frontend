@@ -61,7 +61,7 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   background: var(--dark-secondary);
   color: var(--white-col);
