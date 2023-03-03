@@ -11,8 +11,12 @@ import {
   PersonalMessages,
   GroupMessages,
   Profile,
+  Drafts,
+  Bookmarks,
 } from './page'
-
+import CreatePersonalMessage from './components/personalMessage/createMessage'
+import ViewGroupMessages from './components/groups/groupMessageSection'
+import CreateGroup from './components/groups/createGroup'
 import { RedirectPage, ResetPasswordSuccess } from './components/password-flow'
 
 const App = () => {
@@ -23,8 +27,13 @@ const App = () => {
           <Route path='/home' element={<Home />} />
           <Route path='/messages' element={<PersonalMessages />} />
           <Route path='/groups' element={<GroupMessages />} />
+          <Route path='/groups/createGroup' element={<CreateGroup />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/drafts' element={<Drafts />} />
+          <Route path='/bookmarks' element={<Bookmarks />} />
           <Route path='/onboarding' element={<Onboarding />} />
+          <Route path='/:id' element={<CreatePersonalMessage />} />
+          <Route path='/groups/:id' element={<ViewGroupMessages />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />

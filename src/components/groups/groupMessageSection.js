@@ -1,26 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import { Navbar, Homemain } from '../components/home'
+import { Navbar } from '../home'
+import GroupMessage from './message'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
-import GroupLayout from '../components/groups/groupLayout'
-const GroupMessages = () => {
+
+const GroupMessageSection = () => {
   return (
     <Wrapper>
       <div className='header'>
         <div className='header-icon back-btn'>
           <MdOutlineArrowBackIosNew />
         </div>
-        <h3 className='header-title'>Groups</h3>
+        <h3 className='header-title'>Lorem Group</h3>
         <div className='header-icon menu'>
           <HiOutlineDotsVertical />
         </div>
       </div>
-      <div className='group-container'>
-        <GroupLayout />
-        <GroupLayout />
-        <GroupLayout />
+      <div className='group-message-container'>
+        <GroupMessage />
+        <GroupMessage />
       </div>
       <Navbar />
     </Wrapper>
@@ -32,8 +31,8 @@ const Wrapper = styled.section`
   min-height: 100vh;
   width: 100vw;
   background: var(--secondary-home);
-  color: var(--white-col);
   text-align: center;
+  color: var(--white-col);
 
   .header {
     height: 55px;
@@ -56,7 +55,7 @@ const Wrapper = styled.section`
     font-size: 1em;
   }
 
-  .group-container {
+  .group-message-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,5 +65,4 @@ const Wrapper = styled.section`
     padding-bottom: 7rem;
   }
 `
-
-export default GroupMessages
+export default GroupMessageSection

@@ -8,6 +8,8 @@ import Onboarding from './Onboarding.js'
 import PersonalMessages from './PersonalMessages'
 import GroupMessages from './GroupMessages'
 import Profile from './Profile'
+import Bookmarks from './Bookmarks'
+import Drafts from './Draft'
 export {
   Home,
   Signup,
@@ -19,4 +21,6 @@ export {
   PersonalMessages,
   GroupMessages,
   Profile,
+  Bookmarks,
+  Drafts,
 }

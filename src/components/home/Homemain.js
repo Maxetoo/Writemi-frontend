@@ -103,10 +103,12 @@ const Wrapper = styled.article`
     width: 90%;
     height: 300px;
     margin: 1rem;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    /* display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    grid-row-gap: 20px; */
     font-weight: bold;
   }
 
@@ -117,34 +119,35 @@ const Wrapper = styled.article`
     cursor: pointer;
     border: solid 1.5px #bbd1f4;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    color: var(--white-col);
+    justify-content: flex-start;
+    padding: 1rem;
+    /* color: var(--white-col); */
+    margin-top: 1rem;
     /* background: #0a0a36; */
-    /* background: #bbd1f4; */
-    background: #435c6d;
-    color: white;
-    /* color: black; */
+    background: #bbd1f4;
+    /* background: #435c6d; */
+    /* color: white; */
+    color: black;
     /* opacity: 0.8; */
   }
 
   .nav-icon {
-    font-size: 1.5em;
+    font-size: 1.2em;
     /* font-weight: bold; */
     /* color: #090933; */
     /* color: white; */
   }
 
   .nav-title {
-    font-size: 0.8em;
-    text-align: center;
+    font-size: 0.9em;
     width: 50%;
-    opacity: 0.75;
+    margin-left: 1rem;
   }
 
   .btn-container {
-    margin: 1rem;
+    margin: 2rem;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -153,12 +156,12 @@ const Wrapper = styled.article`
 
   button {
     width: 100%;
-    height: 55px;
+    height: 50px;
     margin: 0.5rem;
     border-radius: 5px;
-    border: solid 1px black;
     cursor: pointer;
     font-size: 1em;
+    border: none;
   }
 
   .create {

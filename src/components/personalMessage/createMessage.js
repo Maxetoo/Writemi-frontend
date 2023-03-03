@@ -2,38 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
-import { Navbar, Homemain } from '../components/home'
-import { profileDate } from '../services/profileData'
-import { Link } from 'react-router-dom'
 
-const Profile = () => {
+const CreateMessage = () => {
   return (
     <Wrapper>
       <div className='header'>
         <div className='header-icon back-btn'>
           <MdOutlineArrowBackIosNew />
         </div>
-        <h3 className='header-title'>Profile</h3>
+        <h3 className='header-title'>Send Your Message</h3>
         <div className='header-icon menu'></div>
       </div>
-      <div className='profile-container'>
-        {profileDate.map((value, index) => {
-          const { link, title, icon } = value
-          return (
-            <Link className='container' key={index} to={link}>
-              <p className='profile-icon'>{icon}</p>
-              <p className='profile-title'>{title}</p>
-            </Link>
-          )
-        })}
+      <div className='message-container'>
+        <p>Say something about me...</p>
+        <form>
+          <textarea draggable='true' />
+          <p className='counter'>0/300</p>
+          <button type='button'>Send</button>
+        </form>
       </div>
-      <Navbar />
     </Wrapper>
   )
 }
 
 const Wrapper = styled.section`
-  position: relative;
   min-height: 100vh;
   width: 100vw;
   background: var(--secondary-home);
@@ -61,37 +53,55 @@ const Wrapper = styled.section`
     font-size: 1em;
   }
 
-  .profile-container {
+  .message-container {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  form {
+    margin-top: 2rem;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 2rem;
-    margin-top: 1rem;
-  }
-
-  .container {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    text-decoration: none;
+  }
+
+  textarea {
+    min-width: 100%;
+    max-width: 100%;
+    background: none;
     color: var(--white-col);
-    margin: 1rem;
     font-size: 1.2em;
-    border-bottom: solid 1px #dddbdb;
-    padding: 0.5rem;
+    min-height: 50px;
+    height: auto;
+    border: none;
+    outline: none;
   }
 
-  .profile-icon {
-    margin-right: 1.5rem;
-    font-size: 1.1em;
+  .counter {
+    width: 100%;
+    text-align: start;
+    opacity: 0.8;
+    font-size: 0.8em;
+    margin: 0.2rem;
   }
 
-  .profile-title {
-    margin-bottom: 0.55rem;
+  button {
+    margin: 1rem;
+    height: 50px;
+    width: 90%;
+    border: none;
+    background: var(--login-secondary);
+    color: var(--white-col);
+    font-size: 0.9em;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
   }
 `
-
-export default Profile
+export default CreateMessage

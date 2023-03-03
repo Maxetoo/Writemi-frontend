@@ -1,31 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
-import {
-  BsBookmarksFill,
-  BsBookmarks,
-  BsChatRightTextFill,
-  BsChatRightText,
-  BsFacebook,
-} from 'react-icons/bs'
-const MyMessages = () => {
+import { RxCopy } from 'react-icons/rx'
+
+const BookmarkMessage = () => {
   return (
     <Wrapper>
-      <h3>Message:</h3>
+      <h3 className='message-title'>Message:</h3>
       <p className='message'>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, natus.
       </p>
       <p className='time-stamp'>20mins ago</p>
       <div className='btn-container'>
         <button type='button' className='bookmark-btn'>
-          <BsBookmarksFill className='bookmark' />
-          Bookmark Response
+          <RxCopy className='bookmark' />
+          Copy to clipboard
         </button>
         <button type='button' className='delete-btn'>
           <MdDelete className='delete' />
           Delete Response
         </button>
       </div>
+      <p className='message-source'>source: groupmessages</p>
     </Wrapper>
   )
 }
@@ -101,5 +97,14 @@ const Wrapper = styled.article`
     font-size: 1.2em;
     margin-bottom: 0.1rem;
   }
+
+  .message-source {
+    width: 100%;
+    text-align: end;
+    padding-right: 1rem;
+    opacity: 0.8;
+    font-size: 0.8em;
+    margin: 0.3rem;
+  }
 `
-export default MyMessages
+export default BookmarkMessage

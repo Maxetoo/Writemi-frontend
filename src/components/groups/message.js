@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import {
   BsBookmarksFill,
@@ -8,7 +9,7 @@ import {
   BsChatRightText,
   BsFacebook,
 } from 'react-icons/bs'
-const MyMessages = () => {
+const GroupMessage = () => {
   return (
     <Wrapper>
       <h3>Message:</h3>
@@ -21,10 +22,10 @@ const MyMessages = () => {
           <BsBookmarksFill className='bookmark' />
           Bookmark Response
         </button>
-        <button type='button' className='delete-btn'>
+        {/* <button type='button' className='delete-btn'>
           <MdDelete className='delete' />
           Delete Response
-        </button>
+        </button> */}
       </div>
     </Wrapper>
   )
@@ -102,4 +103,5 @@ const Wrapper = styled.article`
     margin-bottom: 0.1rem;
   }
 `
-export default MyMessages
+
+export default GroupMessage

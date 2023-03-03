@@ -1,31 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
+import { BsPencilSquare } from 'react-icons/bs'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
-import {
-  BsBookmarksFill,
-  BsBookmarks,
-  BsChatRightTextFill,
-  BsChatRightText,
-  BsFacebook,
-} from 'react-icons/bs'
-const MyMessages = () => {
+import { RxCopy } from 'react-icons/rx'
+
+// BsPencilSquare
+const DraftMessage = () => {
   return (
     <Wrapper>
-      <h3>Message:</h3>
+      <div className='messge-header'>
+        <h3>Message:</h3>
+        <div className='edit-icon'>
+          <BsPencilSquare />
+        </div>
+      </div>
       <p className='message'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, natus.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, odio.
       </p>
-      <p className='time-stamp'>20mins ago</p>
+      <p className='time-stamp'>20 mins ago</p>
       <div className='btn-container'>
-        <button type='button' className='bookmark-btn'>
-          <BsBookmarksFill className='bookmark' />
-          Bookmark Response
+        <button type='button' className='copy-btn'>
+          <RxCopy className='copy' />
+          Copy to clipboard
         </button>
         <button type='button' className='delete-btn'>
           <MdDelete className='delete' />
-          Delete Response
+          Delete
         </button>
       </div>
+      <p className='message-source'>source: groupmessages</p>
     </Wrapper>
   )
 }
@@ -44,20 +47,22 @@ const Wrapper = styled.article`
   justify-content: space-between;
   padding: 1rem;
 
-  .btn-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .messge-header {
     width: 100%;
+    margin: 0.1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  h3 {
-    margin: 0.5rem;
+  .edit-icon {
+    cursor: pointer;
   }
 
-  p {
+  .message {
     margin: 0.5rem;
+    text-align: start;
   }
 
   .time-stamp {
@@ -66,6 +71,15 @@ const Wrapper = styled.article`
     padding-right: 1rem;
     opacity: 0.8;
     font-size: 0.8em;
+    margin: 0.2rem;
+  }
+
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 
   button {
@@ -78,16 +92,14 @@ const Wrapper = styled.article`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-  }
-
-  .bookmark-btn {
     background: #131313;
     color: #ffffff;
     border: none;
   }
 
-  .bookmark {
+  .copy {
     margin-right: 0.3rem;
+    margin-bottom: 0.1rem;
   }
 
   .delete-btn {
@@ -101,5 +113,14 @@ const Wrapper = styled.article`
     font-size: 1.2em;
     margin-bottom: 0.1rem;
   }
+
+  .message-source {
+    width: 100%;
+    text-align: end;
+    padding-right: 1rem;
+    opacity: 0.8;
+    font-size: 0.8em;
+    margin: 0.3rem;
+  }
 `
-export default MyMessages
+export default DraftMessage
