@@ -1,25 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import { Navbar, Homemain } from '../components/home'
-import DraftMessage from '../components/drafts/draftMessage'
+// import DraftMessage from '../components/drafts/draftMessage'
+import { DraftMessage, EmptyDraftMessage } from '../components/drafts'
 const Draft = () => {
+  const { draftEntries } = useSelector((store) => store.drafts)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   return (
     <Wrapper>
       <div className='header'>
-        <div className='header-icon back-btn'>
+        <div className='header-icon back-btn' onClick={() => navigate('/home')}>
           <MdOutlineArrowBackIosNew />
         </div>
-        <h3 className='header-title'>Drafts</h3>
+        <h3 className='header-title'>Drafts ({draftEntries.length})</h3>
         <div className='header-icon menu'>
           <HiOutlineDotsVertical />
         </div>
       </div>
       <div className='message-container'>
-        <DraftMessage />
-        <DraftMessage />
-        <DraftMessage />
+        {draftEntries.length === 0 ? (
+          <EmptyDraftMessage />
+        ) : (
+          draftEntries.map((value) => {
+            return <DraftMessage {...value} key={value._id} />
+          })
+        )}
       </div>
       <Navbar />
     </Wrapper>

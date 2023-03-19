@@ -1,21 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
+
 import { navData } from '../../services/homeData'
-import { changeHomeNav } from '../../slices/eventSlice'
-import { Link } from 'react-router-dom'
+import { changeHomeNav, changeActiveNav } from '../../slices/eventSlice'
+import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
-  const { activeNav } = useSelector((store) => store.event)
+  const { activeNav } = useSelector((store) => store.actions)
   const dispatch = useDispatch()
+  const location = useLocation().pathname
+
+  useEffect(() => {
+    const getNavIndex = navData.findIndex((value) =>
+      location.startsWith(value.link)
+    )
+    let activeIndex
+    if (getNavIndex === -1) {
+      activeIndex = 0
+    } else {
+      activeIndex = getNavIndex
+    }
+
+    dispatch(changeActiveNav(activeIndex))
+  }, [])
+
   return (
     <Wrapper>
       {navData.map((value, index) => {
         const { activeIcon, title, icon, link } = value
         return (
-          <Link to={link}>
+          <Link to={link} key={index}>
             <div
-              key={index}
               className={`icon-container ${
                 activeNav === index ? 'active' : ''
               }`}

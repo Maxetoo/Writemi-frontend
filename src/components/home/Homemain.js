@@ -1,51 +1,92 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { IoMdNotifications } from 'react-icons/io'
 import { RxCopy } from 'react-icons/rx'
 import { homeData, socials } from '../../services/homeData'
 import Logo from '../../assets/images/half-logo.png'
+import { Loader, AlertSuccess } from '../../config'
+import { getProfileLogs } from '../../slices/profileSlice'
+import { copyToClipboard, killCopyAlert } from '../../slices/eventSlice'
+
 // RxCopy
 const Homemain = () => {
+  const { loading, profile } = useSelector((store) => store.profile)
+  const { textCopied } = useSelector((store) => store.actions)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { username } = profile
+  const currentUrl = `${window.origin}/${username}`
+
+  useEffect(() => {
+    dispatch(getProfileLogs())
+  }, [])
+
+  useEffect(() => {
+    if (textCopied) {
+      const timer = setTimeout(() => {
+        dispatch(killCopyAlert())
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [textCopied])
+
+  const shareUrl = () => {
+    window.navigator
+      .share({
+        url: currentUrl,
+        title: 'Writeme',
+        text: 'Send a secret message to me...',
+      })
+      .then(() => console.log('success'))
+      .catch(() => 'Error')
+  }
   return (
     <Wrapper>
-      {/* <div className='header'>
-        <div></div>
-        <IoMdNotifications />
-      </div> */}
-      <img src={Logo} alt='logo' />
-      <h3>Maxeto's Profile</h3>
-      <div className='link-board'>
-        <p className='link-name'>writeme/maxeto/profile</p>
-        <RxCopy className='copy-icon' />
-      </div>
-      <div className='navigation-container'>
-        {homeData.map((value, index) => {
-          const { icon, activeIcon, id, title } = value
-          return (
-            <div className='nav-btn' key={id}>
-              <div className='nav-icon'>{icon}</div>
-              <p className='nav-title'>{title}</p>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <img src={Logo} alt='logo' />
+          <h3>{username} Profile</h3>
+          <div className='link-board'>
+            <p className='link-name'>{currentUrl}</p>
+            <div
+              className='copy-container'
+              onClick={() => dispatch(copyToClipboard(currentUrl))}
+            >
+              <RxCopy className='copy-icon' />
             </div>
-          )
-        })}
-      </div>
-      <div className='btn-container'>
-        <button type='button' className='create'>
-          Create space
-        </button>
-        <button type='button' className='share'>
-          Share my link
-        </button>
-      </div>
-      <div className='social-container'>
-        {socials.map((value, index) => {
-          return (
-            <div className='social-icon' key={index}>
-              {value}
-            </div>
-          )
-        })}
-      </div>
+          </div>
+          <div className='navigation-container'>
+            {homeData.map((value, index) => {
+              const { icon, activeIcon, id, title, link } = value
+              return (
+                <Link to={link} className='nav-btn-container'>
+                  <div className='nav-btn' key={id}>
+                    <div className='nav-icon'>{icon}</div>
+                    <p className='nav-title'>{title}</p>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+          <div className='btn-container'>
+            <button
+              type='button'
+              className='create'
+              onClick={() => navigate('/groups/createGroup')}
+            >
+              Create group
+            </button>
+            <button type='button' className='share' onClick={shareUrl}>
+              Share my link
+            </button>
+          </div>
+        </>
+      )}
+      {textCopied && <AlertSuccess message={'URL copied'} />}
     </Wrapper>
   )
 }
@@ -57,7 +98,6 @@ const Wrapper = styled.article`
   flex-direction: column;
   align-items: center;
   background: var(--secondary-home);
-  /* background: var(--dark-secondary); */
   color: var(--white-col);
   padding: 1rem;
   padding-bottom: 7rem;
@@ -99,22 +139,24 @@ const Wrapper = styled.article`
     opacity: 0.8;
   }
 
+  .copy-container {
+    border-left: solid 1px black;
+    padding-left: 1rem;
+  }
+
   .navigation-container {
     width: 90%;
-    height: 300px;
+    height: auto;
     margin: 1rem;
     display: flex;
     flex-direction: column;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px; */
     font-weight: bold;
   }
 
-  .nav-btn {
+  .nav-btn-container {
     width: 100%;
-    height: 100%;
+    height: 70px;
+    text-decoration: none;
     border-radius: 10px;
     cursor: pointer;
     border: solid 1.5px #bbd1f4;
@@ -128,7 +170,17 @@ const Wrapper = styled.article`
     color: #000000;
   }
 
+  .nav-btn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
   .nav-icon {
+    margin-top: 0.3rem;
     font-size: 1.2em;
   }
 
@@ -139,7 +191,7 @@ const Wrapper = styled.article`
   }
 
   .btn-container {
-    margin: 2rem;
+    margin: 3rem;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -173,6 +225,7 @@ const Wrapper = styled.article`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-top: -1.5rem;
   }
 
   .social-icon {

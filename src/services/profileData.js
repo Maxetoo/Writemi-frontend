@@ -12,19 +12,19 @@ export const profileDate = [
     title: 'Account setting',
     link: 'accountSetting',
   },
-  {
-    icon: <AiFillBell />,
-    title: 'Notification',
-    link: 'notificationSetting',
-  },
+  // {
+  //   icon: <AiFillBell />,
+  //   title: 'Notification',
+  //   link: 'notificationSetting',
+  // },
   {
     icon: <MdPrivacyTip />,
-    title: 'Privacy policy',
-    link: 'privacyPolicy',
+    title: 'Terms and Conditions',
+    link: 'termsAndConditions',
   },
   {
     icon: <ImExit />,
     title: 'Sign out',
-    link: 'signout',
+    link: '',
   },
 ]

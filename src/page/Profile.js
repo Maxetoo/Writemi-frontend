@@ -1,16 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import { Navbar, Homemain } from '../components/home'
 import { profileDate } from '../services/profileData'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { userLogout, fillProfileInputs } from '../slices/profileSlice'
 
 const Profile = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   return (
     <Wrapper>
       <div className='header'>
-        <div className='header-icon back-btn'>
+        <div className='header-icon back-btn' onClick={() => navigate('/home')}>
           <MdOutlineArrowBackIosNew />
         </div>
         <h3 className='header-title'>Profile</h3>
@@ -20,7 +24,16 @@ const Profile = () => {
         {profileDate.map((value, index) => {
           const { link, title, icon } = value
           return (
-            <Link className='container' key={index} to={link}>
+            <Link
+              className='container'
+              key={index}
+              to={link}
+              onClick={() => {
+                if (title === 'Sign out') {
+                  dispatch(userLogout())
+                }
+              }}
+            >
               <p className='profile-icon'>{icon}</p>
               <p className='profile-title'>{title}</p>
             </Link>

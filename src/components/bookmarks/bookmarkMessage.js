@@ -1,27 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import { RxCopy } from 'react-icons/rx'
+import { deleteBookmark, setBtnIndex } from '../../slices/bookmarkSlice'
+import { configTime } from '../../config/moment'
+import { AlertSuccess, AlertError } from '../../config'
+import { copyToClipboard, killCopyAlert } from '../../slices/eventSlice'
 
-const BookmarkMessage = () => {
+const BookmarkMessage = ({ message, createdAt, _id, link, tag }) => {
+  const { deletePending, fetchLoading, targetId } = useSelector(
+    (store) => store.bookmarks
+  )
+  const { textCopied } = useSelector((store) => store.actions)
+  const dispatch = useDispatch()
+
   return (
     <Wrapper>
       <h3 className='message-title'>Message:</h3>
-      <p className='message'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, natus.
-      </p>
-      <p className='time-stamp'>20mins ago</p>
+      <p className='message'>{message}</p>
+      <p className='time-stamp'>{configTime(createdAt)}</p>
       <div className='btn-container'>
-        <button type='button' className='bookmark-btn'>
+        <button
+          type='button'
+          className='bookmark-btn'
+          onClick={() => dispatch(copyToClipboard(message))}
+        >
           <RxCopy className='bookmark' />
           Copy to clipboard
         </button>
-        <button type='button' className='delete-btn'>
+        <button
+          type='button'
+          className='delete-btn'
+          onClick={() => {
+            dispatch(deleteBookmark(_id))
+          }}
+        >
           <MdDelete className='delete' />
           Delete Response
         </button>
       </div>
-      <p className='message-source'>source: groupmessages</p>
+      <p className='message-source'>
+        <Link to={`${link}`}>source: {link.substring(1)}</Link>
+      </p>
     </Wrapper>
   )
 }
@@ -39,6 +61,11 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+
+  .message-title {
+    width: 100%;
+    text-align: start;
+  }
 
   .btn-container {
     display: flex;
@@ -76,6 +103,10 @@ const Wrapper = styled.article`
     justify-content: center;
   }
 
+  .btn-loading {
+    opacity: 0.75;
+  }
+
   .bookmark-btn {
     background: #131313;
     color: #ffffff;
@@ -105,6 +136,10 @@ const Wrapper = styled.article`
     opacity: 0.8;
     font-size: 0.8em;
     margin: 0.3rem;
+  }
+
+  p a {
+    color: var(--white-col);
   }
 `
 export default BookmarkMessage

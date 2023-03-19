@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import {
@@ -8,24 +9,49 @@ import {
   BsChatRightTextFill,
   BsChatRightText,
   BsFacebook,
+  BsFlagFill,
 } from 'react-icons/bs'
-const GroupMessage = () => {
+import { configTime } from '../../config/moment'
+import { addToBookmark } from '../../slices/bookmarkSlice'
+import {
+  Link,
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom'
+// BsFlagFill
+
+const GroupMessage = ({ message, _id, createdAt }) => {
+  const dispatch = useDispatch()
+  const location = useLocation().pathname
+
   return (
     <Wrapper>
       <h3>Message:</h3>
-      <p className='message'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, natus.
-      </p>
-      <p className='time-stamp'>20mins ago</p>
+      <p className='message'>{message}</p>
+      <p className='time-stamp'>{configTime(createdAt)}</p>
       <div className='btn-container'>
-        <button type='button' className='bookmark-btn'>
+        <button
+          type='button'
+          className='bookmark-btn'
+          onClick={() => {
+            dispatch(
+              addToBookmark({
+                source: _id,
+                message,
+                link: location,
+              })
+            )
+          }}
+        >
           <BsBookmarksFill className='bookmark' />
           Bookmark Response
         </button>
-        {/* <button type='button' className='delete-btn'>
-          <MdDelete className='delete' />
-          Delete Response
-        </button> */}
+        <button type='button' className='flag-btn'>
+          <BsFlagFill className='flag' />
+          Flag Response
+        </button>
       </div>
     </Wrapper>
   )
@@ -55,6 +81,8 @@ const Wrapper = styled.article`
 
   h3 {
     margin: 0.5rem;
+    width: 100%;
+    text-align: start;
   }
 
   p {
@@ -91,13 +119,13 @@ const Wrapper = styled.article`
     margin-right: 0.3rem;
   }
 
-  .delete-btn {
+  .flag-btn {
     background: #ec0c0c;
     color: #ffffff;
     border: none;
   }
 
-  .delete {
+  .flag {
     margin-right: 0.3rem;
     font-size: 1.2em;
     margin-bottom: 0.1rem;

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import {
   AiFillEyeInvisible,
   AiFillEye,
@@ -8,33 +8,116 @@ import {
   AiOutlineLock,
 } from 'react-icons/ai'
 import HalfLogo from '../assets/images/half-logo.png'
-// AiOutlineUser
+import { ImCross } from 'react-icons/im'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  toggleLoginPasswordVisibility,
+  fillAuthInputs,
+  userLogin,
+  alertErrorKill,
+} from '../slices/authSlice'
 
 const Login = () => {
+  const {
+    loginPasswordVisible,
+    loginInputs: { username, password },
+    isError,
+    loading,
+    errorMessage,
+    // entries,
+    // isAuthenticated,
+    // isLoggedIn,
+  } = useSelector((store) => store.auth)
+
+  const dispatch = useDispatch()
+  const passwordTarget = useRef()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isError) {
+      const timer = setTimeout(() => {
+        dispatch(alertErrorKill())
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [isError])
+
+  // const navigateToHome = () => {
+  //   if (isAuthenticated) {
+  //     navigate('/home')
+  //   }
+  // }
   return (
     <Wrapper>
       <img src={HalfLogo} alt='writeme-logo' />
       <h2>Welcome</h2>
       <p className='sign'>sign in to continue</p>
+      {isError && (
+        <div className='alert-container'>
+          <p className='alert-texts'>{errorMessage}</p>
+          <div className='exit-btn'>
+            <ImCross />
+          </div>
+        </div>
+      )}
       <form>
         <div className='username-container'>
           <div className='user-icon'>
             <AiOutlineUser />
           </div>
-          <input type='text' placeholder='Enter username' />
+          <input
+            type='text'
+            placeholder='Enter username'
+            value={username}
+            onChange={(e) =>
+              dispatch(
+                fillAuthInputs({
+                  username: e.target.value,
+                  password,
+                  type: 'login',
+                })
+              )
+            }
+          />
         </div>
         <div className='password-container'>
           <div className='password-icon'>
             <AiOutlineLock />
           </div>
-          <input type='password' placeholder='Password' />
-          <div className='password-toggle'>
-            <AiFillEyeInvisible />
+          <input
+            type='password'
+            placeholder='Password'
+            ref={passwordTarget}
+            onChange={(e) =>
+              dispatch(
+                fillAuthInputs({
+                  password: e.target.value,
+                  username,
+                  type: 'login',
+                })
+              )
+            }
+          />
+          <div
+            className='password-toggle'
+            onClick={() => {
+              dispatch(toggleLoginPasswordVisibility(passwordTarget.current))
+            }}
+          >
+            {loginPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
           </div>
         </div>
       </form>
 
-      <button type='button'>Login</button>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch(userLogin({ username, password }))
+        }}
+        className={loading ? 'loading-btn' : ''}
+      >
+        Login
+      </button>
       <Link to='/forgot-password'>
         <p className='forgot-password'>forgot password?</p>
       </Link>
@@ -76,13 +159,40 @@ const Wrapper = styled.section`
     position: relative;
   }
 
+  .alert-container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .alert-texts {
+    font-size: 0.9em;
+    width: 90%;
+  }
+
+  .exit-btn {
+    font-size: 0.7em;
+    height: 90%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+  }
+
   input {
     width: 100%;
     height: 55px;
     margin-top: 0.7rem;
     padding-left: 3rem;
     border-radius: 5px;
-    /* border: solid 1.5px #121629; */
     border: solid 1px var(--login-secondary);
     padding-right: 4rem;
     font-size: 1.1em;
@@ -129,6 +239,10 @@ const Wrapper = styled.section`
     font-size: 1.2em;
   }
 
+  .loading-btn {
+    opacity: 0.75;
+  }
+
   a {
     text-decoration: none;
     color: #000000;
@@ -151,6 +265,11 @@ const Wrapper = styled.section`
   }
 
   @media only screen and (min-width: 768px) {
+    .alert-container {
+      width: 400px;
+      height: auto;
+    }
+
     form {
       width: 400px;
     }

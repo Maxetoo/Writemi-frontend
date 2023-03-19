@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useNavigate, useParams, Link, useLocation } from 'react-router-dom'
+
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import {
   BsBookmarksFill,
@@ -8,20 +10,50 @@ import {
   BsChatRightText,
   BsFacebook,
 } from 'react-icons/bs'
-const MyMessages = () => {
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  deletePersonalMessage,
+  getPersonalMessages,
+  getMessageId,
+} from '../../slices/personalMsgSlice'
+import { addToBookmark } from '../../slices/bookmarkSlice'
+import { configTime } from '../../config/moment'
+
+const MyMessages = ({ message, _id, createdAt }) => {
+  const { deletePending } = useSelector((store) => store.messages)
+
+  const dispatch = useDispatch()
+  // const { id } = useParams()
+  const location = useLocation().pathname
   return (
     <Wrapper>
       <h3>Message:</h3>
-      <p className='message'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, natus.
-      </p>
-      <p className='time-stamp'>20mins ago</p>
+      <p className='message'>{message}</p>
+      <p className='time-stamp'>{configTime(createdAt)}</p>
       <div className='btn-container'>
-        <button type='button' className='bookmark-btn'>
+        <button
+          type='button'
+          className='bookmark-btn'
+          onClick={() => {
+            dispatch(
+              addToBookmark({
+                source: _id,
+                message,
+                link: location,
+              })
+            )
+          }}
+        >
           <BsBookmarksFill className='bookmark' />
           Bookmark Response
         </button>
-        <button type='button' className='delete-btn'>
+        <button
+          type='button'
+          className='delete-btn'
+          onClick={() => {
+            dispatch(deletePersonalMessage(_id))
+          }}
+        >
           <MdDelete className='delete' />
           Delete Response
         </button>
@@ -43,6 +75,7 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  border: solid 1px #000;
 
   .btn-container {
     display: flex;
@@ -54,6 +87,8 @@ const Wrapper = styled.article`
 
   h3 {
     margin: 0.5rem;
+    width: 100%;
+    text-align: start;
   }
 
   p {
@@ -78,6 +113,10 @@ const Wrapper = styled.article`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+  }
+
+  .loading-btn {
+    opacity: 0.75;
   }
 
   .bookmark-btn {

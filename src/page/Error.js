@@ -1,11 +1,9 @@
-import React from 'react';
+import React from 'react'
+import styled from 'styled-components'
 
 const Error = () => {
-    return (
-        <div>
-            Error
-        </div>
-    );
+  return <Wrapper>Error</Wrapper>
 }
 
-export default Error;
+const Wrapper = styled.section``
+export default Error

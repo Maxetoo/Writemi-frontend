@@ -1,34 +1,75 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { BsPencilSquare } from 'react-icons/bs'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import { RxCopy } from 'react-icons/rx'
+import { useDispatch, useSelector } from 'react-redux'
+import { configTime } from '../../config/moment'
+import {
+  deleteDraftMessage,
+  editDraftMessage,
+  checkDraftId,
+} from '../../slices/draftSlice'
+import { AlertSuccess } from '../../config'
+import { copyToClipboard, killCopyAlert } from '../../slices/eventSlice'
 
 // BsPencilSquare
-const DraftMessage = () => {
+const DraftMessage = ({ dateCreated, dateUpdated, message, source, _id }) => {
+  const { textCopied } = useSelector((store) => store.actions)
+  // const {} = useSelector((store) => store.messages)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (textCopied) {
+      const timer = setTimeout(() => {
+        dispatch(killCopyAlert())
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [textCopied])
+
   return (
     <Wrapper>
       <div className='messge-header'>
         <h3>Message:</h3>
-        <div className='edit-icon'>
+        <div
+          className='edit-icon'
+          onClick={() => {
+            dispatch(editDraftMessage({ id: _id, message }))
+            navigate(`/drafts/${_id}`)
+          }}
+        >
           <BsPencilSquare />
         </div>
       </div>
-      <p className='message'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, odio.
-      </p>
-      <p className='time-stamp'>20 mins ago</p>
+      {textCopied && <AlertSuccess message={'Text copied'} />}
+      <p className='message'>{message}</p>
+      <p className='time-stamp'>{configTime(dateCreated)}</p>
       <div className='btn-container'>
-        <button type='button' className='copy-btn'>
+        <button
+          type='button'
+          className='copy-btn'
+          onClick={() => dispatch(copyToClipboard(message))}
+        >
           <RxCopy className='copy' />
           Copy to clipboard
         </button>
-        <button type='button' className='delete-btn'>
+        <button
+          type='button'
+          className='delete-btn'
+          onClick={() => {
+            dispatch(deleteDraftMessage(_id))
+          }}
+        >
           <MdDelete className='delete' />
           Delete
         </button>
       </div>
-      <p className='message-source'>source: groupmessages</p>
+      <p className='message-source'>
+        <Link to={`/${source}`}>source: {source}</Link>
+      </p>
     </Wrapper>
   )
 }
@@ -46,6 +87,7 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  border: solid 1px black;
 
   .messge-header {
     width: 100%;
@@ -80,6 +122,7 @@ const Wrapper = styled.article`
     align-items: center;
     justify-content: center;
     width: 100%;
+    /* margin-top: 0.5rem; */
   }
 
   button {
@@ -121,6 +164,11 @@ const Wrapper = styled.article`
     opacity: 0.8;
     font-size: 0.8em;
     margin: 0.3rem;
+  }
+
+  p a {
+    color: var(--white-col);
+    /* text-decoration: none; */
   }
 `
 export default DraftMessage

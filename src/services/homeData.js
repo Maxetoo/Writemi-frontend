@@ -19,7 +19,8 @@ import {
 import { FaShare } from 'react-icons/fa'
 import { RiWhatsappFill } from 'react-icons/ri'
 import { IoCopyOutline, IoMdNotifications } from 'react-icons/io'
-
+import { MdOutlinePeople } from 'react-icons/md'
+// MdOutlinePeople
 export const navData = [
   {
     id: 0,
@@ -29,21 +30,21 @@ export const navData = [
     link: '/home',
   },
   {
-    id: 0,
+    id: 1,
     title: 'Messages',
     icon: <RiMessage3Line />,
     activeIcon: <RiMessage3Fill />,
     link: '/messages',
   },
   {
-    id: 0,
+    id: 2,
     title: 'Groups',
     icon: <HiOutlineUserGroup />,
     activeIcon: <HiUserGroup />,
     link: '/groups',
   },
   {
-    id: 0,
+    id: 3,
     title: 'Profile',
     icon: <TiUserOutline />,
     activeIcon: <TiUser />,
@@ -62,7 +63,7 @@ export const homeData = [
   {
     id: 1,
     title: 'Group messages',
-    icon: <BsChatRightText />,
+    icon: <MdOutlinePeople />,
     activeIcon: <BsChatRightTextFill />,
     link: '/groups',
   },

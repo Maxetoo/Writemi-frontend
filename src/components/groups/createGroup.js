@@ -1,14 +1,59 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Navbar } from '../home'
+import { BsPencilSquare } from 'react-icons/bs'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
+import Logo from '../../assets/images/half-logo.png'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  uploadGroupImage,
+  fillInputs,
+  createGroupSpace,
+  killCreationAlert,
+  defaultInputValues,
+} from '../../slices/groupMsgSlice'
+import { AlertError, AlertSuccess } from '../../config'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+
+// BsPencilSquare
 
 const CreateGroup = () => {
+  const {
+    loading,
+    isError,
+    image,
+    errorMessage,
+    uploadSuccess,
+    uploadError,
+    groupTitle,
+    groupDescription,
+    groupCreated,
+    descriptionLength,
+    successMessage,
+  } = useSelector((store) => store.groups)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (uploadError || isError || uploadSuccess || groupCreated) {
+      const timer = setTimeout(() => {
+        dispatch(killCreationAlert())
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [uploadError, isError, uploadSuccess, groupCreated])
+
+  useEffect(() => {
+    dispatch(defaultInputValues())
+  }, [])
+
   return (
     <Wrapper>
       <div className='header'>
-        <div className='header-icon back-btn'>
+        <div
+          className='header-icon back-btn'
+          onClick={() => navigate('/groups')}
+        >
           <MdOutlineArrowBackIosNew />
         </div>
         <h3 className='header-title'>Create Group</h3>
@@ -17,21 +62,78 @@ const CreateGroup = () => {
         </div>
       </div>
       <div className='create-container'>
-        <img src='' alt='' />
+        <div className='edit-btn-container'>
+          <BsPencilSquare className='img-edit-btn' />
+        </div>
+        <img
+          src={
+            uploadSuccess
+              ? image
+              : `https://ouch-cdn2.icons8.com/S07cWPmLAvXHhTADC95jExsKeh9oXk_4noCrCoSfZZY/rs:fit:256:256/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNTg1/LzFjYWI0MDMwLWNm/N2EtNGU0Zi1hNThm/LTYxMzUxZmVkZTFm/NS5zdmc.png`
+          }
+          alt='icon8'
+        />
         <input
           type='file'
           id='image-input'
           accept='image/*'
           className='upload'
+          onChange={(e) => {
+            dispatch(uploadGroupImage(e.target.files[0]))
+          }}
         />
-        <input type='text' className='group-title' placeholder='Group title' />
+        <input
+          type='text'
+          className='group-title'
+          placeholder='Group title'
+          value={groupTitle}
+          onChange={(e) => {
+            dispatch(
+              fillInputs({
+                title: e.target.value,
+                description: groupDescription,
+                isEditing: false,
+              })
+            )
+          }}
+        />
         <textarea
           placeholder='Description'
           draggable='true'
           className='group-desc'
+          value={groupDescription}
+          maxLength={30}
+          onChange={(e) => {
+            dispatch(
+              fillInputs({
+                description: e.target.value,
+                title: groupTitle,
+                isEditing: false,
+              })
+            )
+          }}
         ></textarea>
-        <button type='button'>Create</button>
+        <p className='count'>{descriptionLength}/30</p>
+        <button
+          type='button'
+          className={loading ? `btn-loading` : ''}
+          onClick={() => {
+            dispatch(
+              createGroupSpace({
+                name: groupTitle,
+                description: groupDescription,
+                image,
+              })
+            )
+          }}
+        >
+          Create
+        </button>
       </div>
+      {uploadError && <AlertError message={errorMessage} />}
+      {isError && <AlertError message={errorMessage} />}
+      {/* {groupCreated && <AlertSuccess message={successMessage} />} */}
+
       <Navbar />
     </Wrapper>
   )
@@ -67,6 +169,7 @@ const Wrapper = styled.section`
   }
 
   .create-container {
+    /* position: relative */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -76,17 +179,33 @@ const Wrapper = styled.section`
     padding-bottom: 7rem;
   }
 
+  .edit-btn-container {
+    position: absolute;
+    top: 110px;
+    right: 39%;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    /* color: black; */
+    background: var(--login-secondary);
+    color: var(--white-col);
+    font-size: 1em;
+  }
+
   img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: whitesmoke;
+    background: #f5f5f5;
     margin: 1rem;
+    border: solid 1.5px #000000;
+    object-fit: contain;
   }
 
   .upload {
-    background: #0000ff;
-    border-radius: 5px;
+    margin-left: 5rem;
   }
 
   input {
@@ -97,32 +216,40 @@ const Wrapper = styled.section`
   .group-title {
     width: 80%;
     height: 50px;
-    border: none;
     padding: 1rem;
     outline: none;
     font-size: 1em;
-    margin: 1rem;
-    border-bottom: solid 1.5px white;
+    margin-top: 1.5rem;
+    border: solid 1px var(--login-secondary);
+    border-radius: 5px;
   }
 
   .group-desc {
-    margin: 1rem;
+    margin-top: 0.5rem;
     min-width: 80%;
     max-width: 80%;
     min-height: 40px;
-    border: none;
     outline: none;
-    font-size: 1em;
+    font-size: 1.2em;
     padding: 1rem;
     background: none;
-    border-bottom: solid 1.5px white;
     color: var(--white-col);
+    border: solid 1px var(--login-secondary);
+    border-radius: 5px;
+  }
+
+  .count {
+    width: 80%;
+    text-align: end;
+    margin: 0.5rem;
+    opacity: 0.8;
+    font-size: 0.8em;
   }
 
   button {
-    margin: 1rem;
-    height: 50px;
-    width: 80%;
+    margin-top: 1rem;
+    height: 45px;
+    width: 50%;
     border: none;
     background: var(--login-secondary);
     color: var(--white-col);
@@ -130,7 +257,11 @@ const Wrapper = styled.section`
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1em;
+  }
+
+  .btn-loading {
+    opacity: 0.75;
   }
 `
 export default CreateGroup

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import {
@@ -8,37 +8,112 @@ import {
   AiOutlineUser,
   AiOutlineLock,
 } from 'react-icons/ai'
+import { ImCross } from 'react-icons/im'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  toggleSignupPasswordVisibility,
+  alertErrorKill,
+  userSignup,
+  fillAuthInputs,
+} from '../slices/authSlice'
 
 const Signup = () => {
+  const {
+    signupPasswordVisible,
+    isError,
+    errorMessage,
+    loading,
+    signupInputs: { username, password, email },
+  } = useSelector((store) => store.auth)
+  const dispatch = useDispatch()
+  const passwordTarget = useRef()
+
+  useEffect(() => {
+    if (isError) {
+      const timer = setTimeout(() => {
+        dispatch(alertErrorKill())
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [isError])
+
   return (
     <Wrapper>
       <h2>Create Your Writeme Account</h2>
-
+      {isError && (
+        <div className='alert-container'>
+          <p className='alert-texts'>{errorMessage}</p>
+          <div className='exit-btn'>
+            <ImCross />
+          </div>
+        </div>
+      )}
       <form>
         <div className='username-container'>
           <div className='user-icon'>
             <AiOutlineUser />
           </div>
-          <input type='text' placeholder='Enter username' />
+          <input
+            type='text'
+            placeholder='Enter username'
+            value={username}
+            onChange={(e) => {
+              dispatch(
+                fillAuthInputs({ username: e.target.value, password, email })
+              )
+            }}
+          />
         </div>
         <div className='email-container'>
           <div className='email-icon'>
             <AiOutlineMail />
           </div>
-          <input type='email' placeholder='Enter email address' />
+          <input
+            type='email'
+            placeholder='Enter email address'
+            value={email}
+            onChange={(e) => {
+              dispatch(
+                fillAuthInputs({ email: e.target.value, password, username })
+              )
+            }}
+          />
         </div>
         <div className='password-container'>
           <div className='password-icon'>
             <AiOutlineLock />
           </div>
-          <input type='password' placeholder='Password' />
-          <div className='password-toggle'>
-            <AiFillEyeInvisible />
+          <input
+            type='password'
+            placeholder='Password'
+            ref={passwordTarget}
+            value={password}
+            onChange={(e) => {
+              dispatch(
+                fillAuthInputs({ password: e.target.value, email, username })
+              )
+            }}
+          />
+          <div
+            className='password-toggle'
+            onClick={() => {
+              dispatch(toggleSignupPasswordVisibility(passwordTarget.current))
+            }}
+          >
+            {signupPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
           </div>
         </div>
       </form>
 
-      <button type='button'>Create account</button>
+      <button
+        type='button'
+        className={loading ? 'loading-btn' : ''}
+        onClick={() => {
+          dispatch(userSignup({ username, password, email }))
+        }}
+      >
+        Create account
+      </button>
       <p className='desc'>Already have an account?</p>
       <p className='login-alt'>
         Proceed to
@@ -64,6 +139,34 @@ const Wrapper = styled.section`
     font-size: 2em;
     text-align: center;
     margin: 1rem;
+  }
+
+  .alert-container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .alert-texts {
+    font-size: 0.9em;
+    width: 90%;
+  }
+
+  .exit-btn {
+    font-size: 0.7em;
+    height: 90%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
   }
 
   form {
@@ -136,6 +239,10 @@ const Wrapper = styled.section`
     font-size: 1.2em;
   }
 
+  .loading-btn {
+    opacity: 0.75;
+  }
+
   .desc {
     margin-top: 2rem;
   }
@@ -158,6 +265,11 @@ const Wrapper = styled.section`
   }
 
   @media only screen and (min-width: 768px) {
+    .alert-container {
+      width: 400px;
+      height: auto;
+    }
+
     form {
       width: 400px;
     }
