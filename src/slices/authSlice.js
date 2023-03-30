@@ -4,6 +4,7 @@ import { FaGlasses } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+// "proxy": "https://writemi.onrender.com",
 
 // const addUsernameToStorage = () => {
 //   const username = localStorage.getItem('username')
@@ -57,7 +58,7 @@ export const userLogin = createAsyncThunk(
     const { username, password } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/login',
+        'https://writemi.onrender.com/api/v1/auth/login',
         {
           username,
           password,
@@ -84,7 +85,7 @@ export const userSignup = createAsyncThunk(
     const { username, password, email } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/register',
+        'https://writemi.onrender.com/api/v1/auth/register',
         {
           username,
           password,
@@ -112,7 +113,7 @@ export const forgotPassword = createAsyncThunk(
     const { email } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/forgotPassword',
+        'https://writemi.onrender.com/api/v1/auth/forgotPassword',
         {
           email,
         },

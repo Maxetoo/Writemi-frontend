@@ -36,7 +36,7 @@ export const getPersonalMessages = createAsyncThunk(
     const { currentPage } = thunkApi.getState().messages
     try {
       const resp = await axios.get(
-        `/api/v1/personal?search=${searchValue}&page=${currentPage}`,
+        `https://writemi.onrender.com/api/v1/personal?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -56,9 +56,12 @@ export const deletePersonalMessage = createAsyncThunk(
   'action/delete',
   async (payload, thunkApi) => {
     try {
-      const resp = await axios.delete(`/api/v1/personal/${payload}`, {
-        withCredentials: true,
-      })
+      const resp = await axios.delete(
+        `https://writemi.onrender.com/api/v1/personal/${payload}`,
+        {
+          withCredentials: true,
+        }
+      )
       thunkApi.dispatch(getPersonalMessages())
       return { response: resp.data, status: 'success' }
     } catch (error) {
@@ -79,7 +82,7 @@ export const createPersonalMessage = createAsyncThunk(
     const { username, message } = payload
     try {
       const resp = await axios.post(
-        `/api/v1/personal?username=${username}`,
+        `https://writemi.onrender.com/api/v1/personal?username=${username}`,
         {
           message,
         },
@@ -103,9 +106,12 @@ export const clearAllPersonalMessages = createAsyncThunk(
   'actions/clearPersonalMessages',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(`/api/v1/personal/clearMessages`, {
-        withCredentials: true,
-      })
+      const resp = await axios.delete(
+        `https://writemi.onrender.com/api/v1/personal/clearMessages`,
+        {
+          withCredentials: true,
+        }
+      )
       thunkAPI.dispatch(getPersonalMessages())
       return { response: resp.data, status: 'success' }
     } catch (error) {
