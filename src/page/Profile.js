@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 import { Navbar, Homemain } from '../components/home'
 import { profileDate } from '../services/profileData'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import { userLogout, fillProfileInputs } from '../slices/profileSlice'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+  const linkElem = useRef()
+
   return (
     <Wrapper>
       <div className='header'>
@@ -28,9 +31,13 @@ const Profile = () => {
               className='container'
               key={index}
               to={link}
+              ref={linkElem}
               onClick={() => {
                 if (title === 'Sign out') {
                   dispatch(userLogout())
+                } else if (title === 'Report bug') {
+                  window.location.href =
+                    'mailto: writee.mi.only@gmail.com?subject=Report Bug'
                 }
               }}
             >
@@ -104,6 +111,24 @@ const Wrapper = styled.section`
 
   .profile-title {
     margin-bottom: 0.55rem;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      margin-left: 7rem;
+      width: 50%;
+    }
   }
 `
 

@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import Navbar from '../home/Navbar'
-import { useNavigate } from 'react-router-dom'
-import { MdOutlineArrowBackIosNew } from 'react-icons/md'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { HiOutlineDotsVertical } from 'react-icons/hi'
+import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
 
-const TermsandConditions = () => {
+const Terms = () => {
   const navigate = useNavigate()
   return (
     <Wrapper>
       <div className='header'>
         <div
           className='header-icon back-btn'
-          onClick={() => navigate('/profile')}
+          onClick={() => navigate('/signup')}
         >
           <MdOutlineArrowBackIosNew />
         </div>
@@ -81,7 +81,6 @@ const TermsandConditions = () => {
         </ol>
         <h3>Thank you for using writemi!</h3>
       </div>
-      <Navbar />
     </Wrapper>
   )
 }
@@ -152,7 +151,7 @@ const Wrapper = styled.section`
     opacity: 0.8;
   }
 
-  @media only screen and (min-width: 768px) {
+  /* @media only screen and (min-width: 768px) {
     .header {
       padding: 0rem 3rem 0rem 10rem;
     }
@@ -160,6 +159,7 @@ const Wrapper = styled.section`
     .message-container {
       padding: 2rem 2rem 0rem 10rem;
     }
-  }
+  } */
 `
-export default TermsandConditions
+
+export default Terms

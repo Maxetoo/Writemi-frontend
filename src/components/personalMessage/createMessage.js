@@ -17,6 +17,7 @@ import { saveToDraft, setDraftToLocalStorage } from '../../slices/draftSlice'
 
 const CreateMessage = () => {
   const { id: username } = useParams()
+  const navigate = useNavigate()
   const {
     message,
     deletePending,
@@ -59,7 +60,10 @@ const CreateMessage = () => {
       {!messageSent ? (
         <>
           <div className='header'>
-            <div className='header-icon back-btn'>
+            <div
+              className='header-icon back-btn'
+              onClick={() => navigate('/home')}
+            >
               <MdOutlineArrowBackIosNew />
             </div>
             <h3 className='header-title'>Send Your Message</h3>
@@ -74,7 +78,9 @@ const CreateMessage = () => {
             </div>
           )}
           <div className='message-container'>
-            <p>Say something about me...</p>
+            <p>
+              Say something about <b>{username}</b>...
+            </p>
             <form>
               <textarea
                 draggable='true'

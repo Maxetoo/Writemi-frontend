@@ -10,6 +10,7 @@ import GroupMessages from './GroupMessages'
 import Profile from './Profile'
 import Bookmarks from './Bookmarks'
 import Drafts from './Draft'
+import Terms from './Terms'
 export {
   Home,
   Signup,
@@ -23,4 +24,5 @@ export {
   Profile,
   Bookmarks,
   Drafts,
+  Terms,
 }

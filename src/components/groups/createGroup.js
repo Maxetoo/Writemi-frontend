@@ -62,9 +62,6 @@ const CreateGroup = () => {
         </div>
       </div>
       <div className='create-container'>
-        <div className='edit-btn-container'>
-          <BsPencilSquare className='img-edit-btn' />
-        </div>
         <img
           src={
             uploadSuccess
@@ -262,6 +259,29 @@ const Wrapper = styled.section`
 
   .btn-loading {
     opacity: 0.75;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+
+    .group-title {
+      width: 50%;
+    }
+
+    .group-desc {
+      min-width: 50%;
+      max-width: 50%;
+    }
+
+    .count {
+      width: 50%;
+    }
+
+    button {
+      width: 50%;
+    }
   }
 `
 export default CreateGroup

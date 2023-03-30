@@ -5,6 +5,9 @@ import { ImExit } from 'react-icons/im'
 import { AiFillBell } from 'react-icons/ai'
 import { MdPrivacyTip } from 'react-icons/md'
 import { TiUser, TiUserOutline } from 'react-icons/ti'
+import { AiFillBug } from 'react-icons/ai'
+// AiFillBug
+// IoBugSharp
 
 export const profileDate = [
   {
@@ -12,15 +15,15 @@ export const profileDate = [
     title: 'Account setting',
     link: 'accountSetting',
   },
-  // {
-  //   icon: <AiFillBell />,
-  //   title: 'Notification',
-  //   link: 'notificationSetting',
-  // },
   {
     icon: <MdPrivacyTip />,
     title: 'Terms and Conditions',
     link: 'termsAndConditions',
+  },
+  {
+    icon: <AiFillBug />,
+    title: 'Report bug',
+    link: '',
   },
   {
     icon: <ImExit />,

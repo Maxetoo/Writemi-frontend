@@ -6,9 +6,21 @@ import { TiPlus } from 'react-icons/ti'
 import { IoMdClose } from 'react-icons/io'
 import { BiSearch } from 'react-icons/bi'
 import GroupMessage from './message'
-import { HiOutlineDotsVertical } from 'react-icons/hi'
+import EmptyMessage from './emptyGroupMessages'
+import {
+  HiOutlineDotsVertical,
+  HiArrowLeft,
+  HiArrowRight,
+} from 'react-icons/hi'
+import { TbArrowBackUp } from 'react-icons/tb'
 import { MdOutlineArrowBackIosNew, MdDelete } from 'react-icons/md'
-import { getGroupMessages } from '../../slices/singleGroupSlice'
+import {
+  getGroupMessages,
+  pageNavigator,
+  pageToDefault,
+  flagGroupMessage,
+  killErrorAlert,
+} from '../../slices/singleGroupSlice'
 import {
   Link,
   Navigate,
@@ -16,24 +28,45 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom'
-import { Loader, AlertError, AlertSuccess, NoSearchResult } from '../../config'
+import {
+  Loader,
+  AlertError,
+  AlertSuccess,
+  NoSearchResult,
+  paginator,
+} from '../../config'
+import { getSingleGroup } from '../../slices/groupMsgSlice'
 import { killBookmarkAlert } from '../../slices/bookmarkSlice'
 import { fillSearchValue, toggleShowSearch } from '../../slices/eventSlice'
+import { killAlertError } from '../../slices/profileSlice'
+import SignupPrompt from './signupPrompt'
 
 // groupMessages
 const GroupMessageSection = () => {
   const { searchValue, showSearchInput, textCopied } = useSelector(
     (store) => store.actions
   )
-  const { isLoading, messageEntries } = useSelector(
-    (store) => store.groupMessages
+
+  const {
+    isLoading,
+    messageEntries,
+    totalMessages,
+    currentPage,
+    errorPresent,
+    errorMessage,
+    messageFlagged,
+    successMessage,
+    loginPrompt,
+  } = useSelector((store) => store.groupMessages)
+  const { getSingleGroupLoad, getSingleGroupEntry } = useSelector(
+    (store) => store.groups
   )
-  const { isError, alertMessage, bookmarkAdded } = useSelector(
-    (store) => store.bookmarks
-  )
+  const { isError, alertMessage, bookmarkAdded, bookmarkLoginPrompt } =
+    useSelector((store) => store.bookmarks)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
+  const { name } = getSingleGroupEntry
   useEffect(() => {
     dispatch(getGroupMessages(id))
   }, [])
@@ -48,18 +81,31 @@ const GroupMessageSection = () => {
   }, [isError, bookmarkAdded])
 
   useEffect(() => {
-    console.log('Message', messageEntries)
+    if (errorPresent || messageFlagged) {
+      const timer = setTimeout(() => {
+        dispatch(killErrorAlert())
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [errorPresent, messageFlagged])
+
+  useEffect(() => {
+    dispatch(getSingleGroup(id))
   }, [])
+
   return (
     <Wrapper>
       <div className='header'>
-        <div className='header-icon back-btn'>
+        <div
+          className='header-icon back-btn'
+          onClick={() => navigate('/groups')}
+        >
           <MdOutlineArrowBackIosNew />
         </div>
         {!showSearchInput ? (
           <>
             <h3 className='header-title'>
-              Group Messages ({messageEntries.length})
+              {getSingleGroupLoad ? 'Group messages' : name} ({totalMessages})
             </h3>
             <div className='right-header-btns'>
               <div
@@ -70,12 +116,7 @@ const GroupMessageSection = () => {
               >
                 <BiSearch />
               </div>
-              <div
-                className='header-icon menu'
-                // onClick={() => dispatch(toggleShowClearBtn())}
-              >
-                <HiOutlineDotsVertical />
-              </div>
+              <div className='header-icon menu'></div>
             </div>
           </>
         ) : (
@@ -102,36 +143,76 @@ const GroupMessageSection = () => {
           </>
         )}
       </div>
-      {/* {isLoading ? (
-        <Loader />
-      ) : messageEntries.length === 0 && searchValue.length > 0 ? (
-        <NoSearchResult />
-      ) : messageEntries.length === 0 && !searchValue ? (
-        // <EmptyMessage />
-        <h3>Empty message</h3>
-      ) : (
-        messageEntries.map((value) => {
-          return <GroupMessage {...value} key={value._id} />
-        })
-      )} */}
-      {/* {messageEntries.length} */}
-      {/* {isLoading ? (
-        <Loader />
-      ) : (
-        <div className='group-message-container'>
-          {messageEntries.map((value) => {
+      {(loginPrompt || bookmarkLoginPrompt) && <SignupPrompt />}
+      <div className='group-message-container'>
+        {isLoading ? (
+          <Loader />
+        ) : messageEntries.length === 0 && searchValue.length > 0 ? (
+          <NoSearchResult />
+        ) : messageEntries.length === 0 && !searchValue ? (
+          <EmptyMessage />
+        ) : (
+          messageEntries.map((value) => {
             return <GroupMessage {...value} key={value._id} />
-          })}
-        </div>
-      )} */}
+          })
+        )}
+      </div>
       <div
         className='create-msg-icon'
-        onClick={() => navigate('/groups/createGroup')}
+        onClick={() => navigate(`/group/addMessage/${id}`)}
       >
         <TiPlus />
       </div>
+      {totalMessages > 7 && (
+        <div className='pagination-container'>
+          <div className='pagination'>
+            <span
+              className='page-left pag-icon'
+              onClick={() => {
+                dispatch(
+                  pageNavigator({
+                    type: 'dec',
+                    totalPages: `${paginator(totalMessages)}`,
+                  })
+                )
+                dispatch(getGroupMessages(id))
+              }}
+            >
+              <HiArrowLeft />
+            </span>
+            <span className='page-count'>
+              {currentPage} of {paginator(totalMessages)}
+            </span>
+            <span
+              className='page-right pag-icon'
+              onClick={() => {
+                dispatch(
+                  pageNavigator({
+                    type: 'inc',
+                    totalPages: `${paginator(totalMessages)}`,
+                  })
+                )
+                dispatch(getGroupMessages(id))
+              }}
+            >
+              <HiArrowRight />
+            </span>
+            <span
+              className='exit pag-icon'
+              onClick={() => {
+                dispatch(pageToDefault())
+                dispatch(getGroupMessages(id))
+              }}
+            >
+              <TbArrowBackUp />
+            </span>
+          </div>
+        </div>
+      )}
       {bookmarkAdded && <AlertSuccess message={alertMessage} />}
+      {messageFlagged && <AlertSuccess message={successMessage} />}
       {isError && <AlertError message={alertMessage} />}
+      {errorPresent && <AlertError message={errorMessage} />}
       <Navbar />
     </Wrapper>
   )
@@ -144,6 +225,7 @@ const Wrapper = styled.section`
   background: var(--secondary-home);
   text-align: center;
   color: var(--white-col);
+  padding-bottom: 7rem;
 
   .header {
     height: 55px;
@@ -198,7 +280,6 @@ const Wrapper = styled.section`
     width: 100%;
     height: auto;
     margin-top: 2rem;
-    padding-bottom: 7rem;
   }
 
   .create-msg-icon {
@@ -214,6 +295,62 @@ const Wrapper = styled.section`
     background: var(--dark-secondary);
     color: var(--white-col);
     cursor: pointer;
+  }
+
+  .pagination-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    margin-top: 2rem;
+  }
+
+  .pagination {
+    width: 60%;
+    height: 50px;
+    border-radius: 10px;
+    background: #435c6d;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 1.5rem 4rem 1.5rem 4rem; */
+    padding: 1.5rem 2rem 1.5rem 2rem;
+    border: solid 1px black;
+  }
+
+  .pagination span {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .page-count {
+    font-size: 0.95em;
+    opacity: 0.85;
+  }
+
+  .pag-icon {
+    font-size: 1.2em;
+    color: #0e0e0e;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+
+    .pagination {
+      width: 300px;
+    }
   }
 `
 export default GroupMessageSection

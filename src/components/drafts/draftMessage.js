@@ -87,7 +87,7 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border: solid 1px black;
+  border: solid 1px #000;
 
   .messge-header {
     width: 100%;

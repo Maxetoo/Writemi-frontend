@@ -42,7 +42,12 @@ const BookmarkMessage = ({ message, createdAt, _id, link, tag }) => {
         </button>
       </div>
       <p className='message-source'>
-        <Link to={`${link}`}>source: {link.substring(1)}</Link>
+        <Link to={`${link}`}>
+          source:{' '}
+          {link.startsWith('/groups')
+            ? link.substring(1, 7)
+            : link.substring(1)}
+        </Link>
       </p>
     </Wrapper>
   )
@@ -61,6 +66,7 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  border: solid 1px #000;
 
   .message-title {
     width: 100%;
@@ -101,6 +107,7 @@ const Wrapper = styled.article`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    opacity: 0.95;
   }
 
   .btn-loading {
@@ -140,6 +147,10 @@ const Wrapper = styled.article`
 
   p a {
     color: var(--white-col);
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 50%;
   }
 `
 export default BookmarkMessage

@@ -1,16 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import MellowSuccess from '../../assets/images/mellow-success.png'
 import Mail from '../../assets/images/mail-illustration.png'
+import { defaultResetPasswordPass } from '../../slices/authSlice'
 
 const ResetPasswordSuccess = () => {
+  const dispatch = useDispatch()
   return (
     <Wrapper>
       <img src={MellowSuccess} alt='success-illustration' />
       <h3>Successful!</h3>
       <Link to='/login'>
-        <button type='button'>Proceed to login</button>
+        <button
+          type='button'
+          onClick={() => {
+            dispatch(defaultResetPasswordPass())
+          }}
+        >
+          Proceed to login
+        </button>
       </Link>
     </Wrapper>
   )

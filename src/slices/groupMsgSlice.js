@@ -12,10 +12,8 @@ export const getGroups = createAsyncThunk(
           withCredentials: true,
         }
       )
-      console.log(resp.data)
       return { response: resp.data, status: 'success' }
     } catch (error) {
-      console.log(error)
       return {
         response: error.response.data,
         status: 'error',
@@ -73,6 +71,8 @@ export const createGroupSpace = createAsyncThunk(
           withCredentials: true,
         }
       )
+      window.location.href = `/groups`
+      thunkAPI.dispatch(getGroups())
       return { response: resp.data, status: 'success' }
     } catch (error) {
       return {
@@ -91,10 +91,8 @@ export const getSingleGroup = createAsyncThunk(
       const resp = await axios.get(`/api/v1/group/getGroup/${payload}`, {
         withCredentials: true,
       })
-      console.log(resp.data)
       return { response: resp.data, status: 'success' }
     } catch (error) {
-      console.log(error)
       return {
         response: error.response.data,
         status: 'error',
@@ -140,13 +138,9 @@ export const editGroup = createAsyncThunk(
           withCredentials: true,
         }
       )
-      // thunkAPI.dispatch(toggleGroupModal())
-      // thunkAPI.dispatch(getGroups())
-      console.log(resp.data)
       thunkAPI.dispatch(getSingleGroup(_id))
       return { response: resp.data, status: 'success' }
     } catch (error) {
-      console.log(error)
       return {
         response: error.response.data,
         status: 'error',
@@ -257,7 +251,6 @@ const eventSlice = createSlice({
           state.loading = false
           state.isError = false
           state.groupEntries = response.cluster
-          console.log(state.groupEntries)
         } else {
           state.isError = true
           state.loading = false

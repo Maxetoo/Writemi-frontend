@@ -114,11 +114,16 @@ const Signup = () => {
       >
         Create account
       </button>
-      <p className='desc'>Already have an account?</p>
-      <p className='login-alt'>
-        Proceed to
+      <p className='desc'>
+        Already have an account?
         <Link to='/login'>
           <p className='login-link'>login</p>
+        </Link>
+      </p>
+      <p className='tandc'>
+        By continuing, I agree to Writeme's {''}
+        <Link to='terms' className='terms-link'>
+          Terms and Conditions.
         </Link>
       </p>
     </Wrapper>
@@ -245,13 +250,15 @@ const Wrapper = styled.section`
 
   .desc {
     margin-top: 2rem;
-  }
-
-  .login-alt {
     display: flex;
     flex-direction: row;
-    margin-top: 1rem;
   }
+
+  /* .login-alt {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.2rem;
+  } */
 
   a {
     text-decoration: none;
@@ -262,6 +269,19 @@ const Wrapper = styled.section`
     margin-left: 0.3rem;
     color: #0000ff;
     font-weight: 600;
+  }
+
+  .tandc {
+    width: 80%;
+    text-align: center;
+    opacity: 0.8;
+    font-size: 0.95em;
+    margin: 0.5rem;
+    font-weight: 700;
+  }
+
+  .terms-link {
+    text-decoration: underline;
   }
 
   @media only screen and (min-width: 768px) {

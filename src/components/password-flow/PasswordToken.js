@@ -1,33 +1,35 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
 import { ImCross } from 'react-icons/im'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-  fillEmail,
-  forgotPassword,
-  killForgotPasswordAlert,
-} from '../slices/authSlice'
+  confirmOTP,
+  fillResetToken,
+  killConfirmOTPAlert,
+} from '../../slices/authSlice'
 
-const ForgotPassword = () => {
-  const { email, forgotPasswordError, errorMessage, forgotPasswordLoad } =
-    useSelector((store) => store.auth)
+const PasswordToken = () => {
+  const { token, confirmOTPLoad, confirmOTPError, errorMessage } = useSelector(
+    (store) => store.auth
+  )
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (forgotPasswordError) {
+    if (confirmOTPError) {
       const timer = setTimeout(() => {
-        dispatch(killForgotPasswordAlert())
+        dispatch(killConfirmOTPAlert())
       }, 3000)
       return () => clearTimeout(timer)
     }
-  }, [forgotPasswordError])
-
+  }, [confirmOTPError])
   return (
     <Wrapper>
-      <h2>Reset Password</h2>
-      <p>Enter an email associated with this account to reset your password</p>
-      {forgotPasswordError && (
+      <h2>Enter OTP </h2>
+      <p className='reset-desc'>
+        Not received? Check spams or promotions for mail
+      </p>
+      {confirmOTPError && (
         <div className='alert-container'>
           <p className='alert-texts'>{errorMessage}</p>
           <div className='exit-btn'>
@@ -36,32 +38,35 @@ const ForgotPassword = () => {
         </div>
       )}
       <form>
+        <p>Enter OTP</p>
         <input
-          type='email'
-          value={email}
+          type='text'
+          maxLength={6}
+          value={token}
           onChange={(e) => {
-            dispatch(fillEmail(e.target.value))
+            dispatch(fillResetToken(e.target.value))
           }}
         />
       </form>
       <button
         type='button'
-        className={forgotPasswordLoad ? 'loading-btn' : ''}
+        className={confirmOTPLoad ? 'loading-btn' : ''}
         onClick={() => {
-          dispatch(forgotPassword({ email }))
+          dispatch(confirmOTP({ token }))
         }}
       >
-        Send OTP
+        Continue
       </button>
-      <Link to='/login'>
-        <p className='login'>Back to login</p>
+      <div className='resend-otp'></div>
+      <Link to='/forgot-password'>
+        <p className='login'>Back to resend OTP</p>
       </Link>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.section`
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   padding: 1rem;
   display: flex;
@@ -74,7 +79,7 @@ const Wrapper = styled.section`
     font-size: 2em;
   }
 
-  p {
+  .reset-desc {
     margin: 1rem;
     text-align: center;
     width: 80%;
@@ -112,6 +117,10 @@ const Wrapper = styled.section`
     width: 90%;
   }
 
+  form p {
+    margin-top: 1rem;
+  }
+
   input {
     width: 100%;
     height: 55px;
@@ -126,7 +135,7 @@ const Wrapper = styled.section`
   }
 
   button {
-    margin-top: 4rem;
+    margin-top: 3rem;
     height: 50px;
     width: 90%;
     border: none;
@@ -155,6 +164,11 @@ const Wrapper = styled.section`
   }
 
   @media only screen and (min-width: 768px) {
+    .reset-desc {
+      width: 400px;
+      margin: 1.5rem;
+    }
+
     form {
       width: 400px;
     }
@@ -165,4 +179,4 @@ const Wrapper = styled.section`
   }
 `
 
-export default ForgotPassword
+export default PasswordToken

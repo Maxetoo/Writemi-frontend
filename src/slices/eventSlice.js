@@ -51,6 +51,13 @@ const eventSlice = createSlice({
         state.showSearchInput = true
       }
     },
+
+    exitSearch: (state, action) => {
+      if (state.showSearchInput) {
+        state.searchValue = ''
+        state.showSearchInput = false
+      }
+    },
     setOnboardingToLocalStorage: (state, action) => {
       localStorage.setItem('onboarding', JSON.stringify(state.onboardingDone))
     },
@@ -66,5 +73,6 @@ export const {
   killCopyAlert,
   fillSearchValue,
   toggleShowSearch,
+  exitSearch,
   setOnboardingToLocalStorage,
 } = eventSlice.actions

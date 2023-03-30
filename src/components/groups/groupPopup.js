@@ -45,7 +45,7 @@ const GroupPopup = () => {
         <div className='option-menu'>
           <h3>{name}</h3>
           <div className='link-container'>
-            <p className='link'>{currentUrl.substring(0, 25)}...</p>
+            <p className='link'>{currentUrl.substring(0, 15)}...</p>
             <div
               className='copy-container'
               onClick={() => dispatch(copyToClipboard(currentUrl))}
@@ -69,9 +69,6 @@ const GroupPopup = () => {
               type='button'
               className={`delete-btn ${deleteLoading ? 'btn-loading' : ''}`}
               onClick={() => {
-                // if (deleteSuccess) {
-                //   dispatch(toggleGroupModal())
-                // }
                 dispatch(deleteGroup(_id))
               }}
             >

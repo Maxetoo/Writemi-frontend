@@ -1,45 +1,31 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { copyToClipboard, killCopyAlert } from '../../slices/eventSlice'
-import { getProfileLogs } from '../../slices/profileSlice'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
-const EmptyMessage = () => {
-  const { loading, profile } = useSelector((store) => store.profile)
-  const { username } = profile
-  const { textCopied } = useSelector((store) => store.actions)
-  const currentUrl = `${window.origin}/${username}`
-  const dispatch = useDispatch()
-
+const EmptyGroup = () => {
+  const { id } = useParams()
+  const currentUrl = `${window.origin}/group/addMessage/${id}`
   const shareUrl = () => {
     window.navigator
       .share({
         url: currentUrl,
         title: 'Writeme',
-        text: `Send a secret message to ${username}...`,
+        text: `You're invited to contribute your thoughts to this space`,
       })
       .then(() => console.log('success'))
       .catch(() => 'Error')
   }
-
-  useEffect(() => {
-    dispatch(getProfileLogs())
-  }, [])
-
+  const navigate = useNavigate()
   return (
     <Wrapper>
       <img
         src='https://ouch-cdn2.icons8.com/FJEiV3x9qjSs-JComNUliI-fOzwuRCzNqohb5e_aexU/rs:fit:256:256/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNTg4/Lzg2YTMxMTI2LTc4/NzktNDI4My05Yjky/LWYyMjliNDc0OGU4/NC5zdmc.png'
         alt='empty'
       />
-      <h3>Nothing so far..😅</h3>
-      <p>Tap on the button below to share profile</p>
-      <button
-        type='button'
-        className={loading ? 'btn-loading' : ''}
-        onClick={shareUrl}
-      >
-        Share link
+      <h3>Nothing yet..😅</h3>
+      <p>Tap on the share button to invite people to add messages</p>
+      <button type='button' onClick={shareUrl}>
+        Share
       </button>
     </Wrapper>
   )
@@ -47,9 +33,10 @@ const EmptyMessage = () => {
 
 const Wrapper = styled.article`
   width: 80%;
-  min-height: 200px;
+  height: auto;
   border-radius: 5px;
   text-align: center;
+  /* background: #435c6d; */
   color: #ffffff;
   margin: 1rem;
   display: flex;
@@ -57,6 +44,7 @@ const Wrapper = styled.article`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  /* border: solid 1px black; */
 
   img {
     margin-top: -4rem;
@@ -81,15 +69,5 @@ const Wrapper = styled.article`
     cursor: pointer;
     font-size: 1em;
   }
-
-  .btn-loading {
-    opacity: 0.8;
-  }
-
-  @media only screen and (min-width: 768px) {
-    button {
-      width: 50%;
-    }
-  }
 `
-export default EmptyMessage
+export default EmptyGroup

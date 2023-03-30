@@ -112,6 +112,7 @@ const initialState = {
   showClearBtn: false,
   totalMessages: 0,
   currentPage: 1,
+  bookmarkLoginPrompt: false,
 }
 
 const eventSlice = createSlice({
@@ -161,6 +162,9 @@ const eventSlice = createSlice({
     pageToDefault: (state, action) => {
       state.currentPage = 1
     },
+    exitLoginPrompt: (state, action) => {
+      state.bookmarkLoginPrompt = false
+    },
   },
   extraReducers(builder) {
     builder
@@ -169,7 +173,7 @@ const eventSlice = createSlice({
         state.isError = false
         state.alertMessage = ''
         state.bookmarkAdded = false
-        console.log('LOADING...')
+        state.bookmarkLoginPrompt = false
       })
       .addCase(addToBookmark.fulfilled, (state, action) => {
         state.loading = false
@@ -178,6 +182,9 @@ const eventSlice = createSlice({
           state.isError = true
           state.bookmarkAdded = false
           state.alertMessage = 'Unable to bookmark message'
+        } else if (code === 401) {
+          state.isError = false
+          state.bookmarkLoginPrompt = true
         } else if (status === 'success') {
           state.bookmarkAdded = true
           state.isError = false
@@ -261,4 +268,5 @@ export const {
   exitClearBtn,
   pageNavigator,
   pageToDefault,
+  exitLoginPrompt,
 } = eventSlice.actions

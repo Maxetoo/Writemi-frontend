@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -12,7 +12,10 @@ import {
   BsFlagFill,
 } from 'react-icons/bs'
 import { configTime } from '../../config/moment'
+import { flagGroupMessage } from '../../slices/singleGroupSlice'
 import { addToBookmark } from '../../slices/bookmarkSlice'
+import { getSingleGroup } from '../../slices/groupMsgSlice'
+
 import {
   Link,
   Navigate,
@@ -20,6 +23,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom'
+
 // BsFlagFill
 
 const GroupMessage = ({ message, _id, createdAt }) => {
@@ -48,10 +52,16 @@ const GroupMessage = ({ message, _id, createdAt }) => {
           <BsBookmarksFill className='bookmark' />
           Bookmark Response
         </button>
-        <button type='button' className='flag-btn'>
+        {/* <button
+          type='button'
+          className='flag-btn'
+          onClick={() => {
+            dispatch(flagGroupMessage(_id))
+          }}
+        >
           <BsFlagFill className='flag' />
           Flag Response
-        </button>
+        </button> */}
       </div>
     </Wrapper>
   )
@@ -107,6 +117,7 @@ const Wrapper = styled.article`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    opacity: 0.9;
   }
 
   .bookmark-btn {
@@ -129,6 +140,10 @@ const Wrapper = styled.article`
     margin-right: 0.3rem;
     font-size: 1.2em;
     margin-bottom: 0.1rem;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 50%;
   }
 `
 

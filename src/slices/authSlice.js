@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { FaGlasses } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
-// const getLoginToLocalStorage = () => {
-//   const draftData = localStorage.getItem('isLoggedIn')
-//   if (draftData) {
-//     return JSON.parse(localStorage.getItem('isLoggedIn'))
+// const addUsernameToStorage = () => {
+//   const username = localStorage.getItem('username')
+//   if (username) {
+//     return JSON.parse(localStorage.getItem('username'))
 //   } else {
 //     return ''
 //   }
@@ -25,16 +27,28 @@ const initialState = {
     email: '',
   },
   username: '',
+  email: '',
+  token: '',
+  password: '',
+  confirmPassword: '',
   loginEntries: [],
   signupEntries: [],
   loading: false,
+  forgotPasswordLoad: false,
+  forgotPasswordError: false,
+  confirmOTPLoad: false,
+  confirmOTPError: false,
+  resetLoad: false,
+  resetError: false,
   isError: false,
   errorMessage: '',
   isAuthenticated: false,
-  // isLoggedIn: getLoginToLocalStorage(),
   loginSuccess: false,
   signupSuccess: false,
-  userCookie: document.cookie,
+  passwordResetSuccessful: false,
+  userCookie: document.cookie.startsWith('token'),
+  validEmail: document.cookie.startsWith('validEmail'),
+  validToken: Cookies.get('validToken') && true,
 }
 
 export const userLogin = createAsyncThunk(
@@ -92,6 +106,82 @@ export const userSignup = createAsyncThunk(
   }
 )
 
+export const forgotPassword = createAsyncThunk(
+  'actions/forgotPassword',
+  async (payload, thunkAPI) => {
+    const { email } = payload
+    try {
+      const resp = await axios.post(
+        '/api/v1/auth/forgotPassword',
+        {
+          email,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      return { response: resp.data, status: 'success' }
+    } catch (error) {
+      return {
+        response: error.response.data,
+        status: 'error',
+        code: error.response.status,
+      }
+    }
+  }
+)
+
+export const confirmOTP = createAsyncThunk(
+  'actions/confirmOTP',
+  async (payload, thunkAPI) => {
+    const { token } = payload
+    try {
+      const resp = await axios.post(
+        '/api/v1/auth/confirmToken',
+        {
+          token,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      return { response: resp.data, status: 'success' }
+    } catch (error) {
+      return {
+        response: error.response.data,
+        status: 'error',
+        code: error.response.status,
+      }
+    }
+  }
+)
+
+export const resetPassword = createAsyncThunk(
+  'actions/resetPassword',
+  async (payload, thunkAPI) => {
+    const { password, confirmPassword } = payload
+    try {
+      const resp = await axios.patch(
+        '/api/v1/auth/changePassword',
+        {
+          password,
+          confirmPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      return { response: resp.data, status: 'success' }
+    } catch (error) {
+      return {
+        response: error.response.data,
+        status: 'error',
+        code: error.response.status,
+      }
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -125,15 +215,39 @@ const authSlice = createSlice({
       }
     },
 
+    fillEmail: (state, action) => {
+      state.email = action.payload
+    },
+    fillResetToken: (state, action) => {
+      state.token = action.payload
+    },
     alertErrorKill: (state, action) => {
       state.isError = false
     },
-    // setLoginToLocalStorage: (state, action) => {
-    //   localStorage.setItem('isLoggedIn', JSON.stringify(state.isLoggedIn))
-    // },
 
+    killForgotPasswordAlert: (state, action) => {
+      state.forgotPasswordError = false
+    },
+    killConfirmOTPAlert: (state, action) => {
+      state.confirmOTPError = false
+    },
+    fillResetPasswords: (state, action) => {
+      const { password, confirmPassword } = action.payload
+      state.password = password
+      state.confirmPassword = confirmPassword
+    },
+
+    killResetPasswordAlert: (state, action) => {
+      state.resetError = false
+    },
     updateCookieState: (state, action) => {
-      state.userCookie = document.cookie
+      state.userCookie = document.cookie.startsWith('token')
+    },
+    defaultResetPasswordPass: (state, action) => {
+      state.passwordResetSuccessful = false
+    },
+    setUsernameToLocalStorage: (state, action) => {
+      localStorage.setItem('username', JSON.stringify(state.username))
     },
   },
   extraReducers(builder) {
@@ -152,6 +266,7 @@ const authSlice = createSlice({
         } else if (status === 'success') {
           state.isAuthenticated = true
           state.loginEntries = response.user
+          state.username = response.user.username
         } else {
           state.isError = true
           state.errorMessage = response.msg
@@ -180,6 +295,66 @@ const authSlice = createSlice({
       .addCase(userSignup.rejected, (state, action) => {
         state.loading = false
       })
+      .addCase(forgotPassword.pending, (state, action) => {
+        state.forgotPasswordLoad = true
+        state.forgotPasswordError = false
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.forgotPasswordLoad = false
+        const { status, code, response } = action.payload
+        if (code === 500) {
+          state.forgotPasswordError = true
+          state.errorMessage = `Can't login due to network`
+        } else if (status === 'success') {
+          window.location.href = '/password-token'
+        } else {
+          state.forgotPasswordError = true
+          state.errorMessage = response.msg
+        }
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.forgotPasswordLoad = false
+      })
+      .addCase(confirmOTP.pending, (state, action) => {
+        state.confirmOTPLoad = true
+        state.confirmOTPError = false
+      })
+      .addCase(confirmOTP.fulfilled, (state, action) => {
+        state.confirmOTPLoad = false
+        const { status, code, response } = action.payload
+        if (code === 500) {
+          state.confirmOTPError = true
+          state.errorMessage = `Failed due to poor network`
+        } else if (status === 'success') {
+          window.location.href = '/reset-password'
+        } else {
+          state.confirmOTPError = true
+          state.errorMessage = response.msg
+        }
+      })
+      .addCase(confirmOTP.rejected, (state, action) => {
+        state.confirmOTPLoad = false
+      })
+      .addCase(resetPassword.pending, (state, action) => {
+        state.resetLoad = true
+        state.resetError = false
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.resetLoad = false
+        const { status, code, response } = action.payload
+        if (code === 500) {
+          state.resetError = true
+          state.errorMessage = `Failed due to poor network`
+        } else if (status === 'success') {
+          state.passwordResetSuccessful = true
+        } else {
+          state.resetError = true
+          state.errorMessage = response.msg
+        }
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.resetLoad = false
+      })
   },
 })
 
@@ -190,4 +365,12 @@ export const {
   fillAuthInputs,
   alertErrorKill,
   updateCookieState,
+  fillEmail,
+  killForgotPasswordAlert,
+  fillResetToken,
+  killConfirmOTPAlert,
+  fillResetPasswords,
+  killResetPasswordAlert,
+  defaultResetPasswordPass,
+  setUsernameToLocalStorage,
 } = authSlice.actions

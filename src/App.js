@@ -8,9 +8,13 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { userIsLoggedIn, updateCookieState } from './slices/authSlice'
+import {
+  userIsLoggedIn,
+  updateCookieState,
+  setUsernameToLocalStorage,
+} from './slices/authSlice'
 import { setDraftToLocalStorage } from './slices/draftSlice'
-import { setOnboardingToLocalStorage } from './slices/eventSlice'
+import { setOnboardingToLocalStorage, exitSearch } from './slices/eventSlice'
 import {
   Home,
   Login,
@@ -24,6 +28,7 @@ import {
   Profile,
   Drafts,
   Bookmarks,
+  Terms,
 } from './page'
 import {
   AccountSetting,
@@ -37,26 +42,36 @@ import CreateGroup from './components/groups/createGroup'
 import EditGroup from './components/groups/editGroup'
 import { EditDraftMessage } from './components/drafts'
 import CreateGroupMessage from './components/groups/createMessage'
-import { RedirectPage, ResetPasswordSuccess } from './components/password-flow'
-import { ProtectedRoute, RedirectRoute } from './config'
+import {
+  RedirectPage,
+  ResetPasswordSuccess,
+  EnterPasswordToken,
+} from './components/password-flow'
+import {
+  ProtectedRoute,
+  RedirectRoute,
+  ProtectPasswordToken,
+  ProtectPasswordReset,
+} from './config'
+import { getProfileLogs } from './slices/profileSlice'
 
 const App = () => {
-  const { isAuthenticated, isLoggedIn, userCookie } = useSelector(
-    (store) => store.auth
-  )
+  const {
+    isAuthenticated,
+    isLoggedIn,
+    userCookie,
+    passwordResetSuccessful,
+    username: getUsername,
+  } = useSelector((store) => store.auth)
   const { draftEntries } = useSelector((store) => store.drafts)
   const { onboardingDone } = useSelector((store) => store.actions)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation().pathname
+  const { loading, profile } = useSelector((store) => store.profile)
+  const { username } = profile
 
-  // useEffect(() => {
-  //   const cookie = document.cookie
-  //   if (cookie) {
-  //     dispatch(userIsLoggedIn())
-  //   }
-  // }, [])
   useEffect(() => {
     dispatch(setOnboardingToLocalStorage())
   }, [onboardingDone])
@@ -74,6 +89,22 @@ const App = () => {
       navigate('/home')
     }
   }, [location])
+
+  useEffect(() => {
+    dispatch(exitSearch())
+  }, [location])
+
+  // useEffect(() => {
+  //   if (!getUsername) {
+  //     dispatch(getProfileLogs())
+  //   }
+  // }, [getUsername])
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     dispatch(setUsernameToLocalStorage(username))
+  //   }
+  // }, [loading])
 
   return (
     <React.Fragment>
@@ -224,9 +255,15 @@ const App = () => {
           <Route
             path='/reset-password'
             element={
-              <RedirectRoute>
-                <ResetPassword />
-              </RedirectRoute>
+              <ProtectPasswordReset>
+                <RedirectRoute>
+                  {passwordResetSuccessful ? (
+                    <ResetPasswordSuccess />
+                  ) : (
+                    <ResetPassword />
+                  )}
+                </RedirectRoute>
+              </ProtectPasswordReset>
             }
           />
           <Route
@@ -238,13 +275,16 @@ const App = () => {
             }
           />
           <Route
-            path='/reset-password-success'
+            path='/password-token'
             element={
-              <RedirectRoute>
-                <ResetPasswordSuccess />
-              </RedirectRoute>
+              <ProtectPasswordToken>
+                <RedirectRoute>
+                  <EnterPasswordToken />
+                </RedirectRoute>
+              </ProtectPasswordToken>
             }
           />
+          <Route path='/signup/terms' element={<Terms />} />
           <Route path='*' element={<Error />} />
         </Routes>
       </main>

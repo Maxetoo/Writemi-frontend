@@ -140,5 +140,9 @@ const Wrapper = styled.article`
     font-size: 1.2em;
     margin-bottom: 0.1rem;
   }
+
+  @media only screen and (min-width: 768px) {
+    width: 50%;
+  }
 `
 export default MyMessages

@@ -7,8 +7,9 @@ const RedirectRoute = ({ children }) => {
   const { isAuthenticated, userCookie } = useSelector((store) => store.auth)
   if (userCookie) {
     return <Navigate to='/home' state={{ from: location }} replace />
+  } else {
+    return children
   }
-  return children
 }
 
 export default RedirectRoute

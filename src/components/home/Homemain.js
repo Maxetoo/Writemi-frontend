@@ -9,15 +9,19 @@ import Logo from '../../assets/images/half-logo.png'
 import { Loader, AlertSuccess } from '../../config'
 import { getProfileLogs } from '../../slices/profileSlice'
 import { copyToClipboard, killCopyAlert } from '../../slices/eventSlice'
+import { setUsernameToLocalStorage } from '../../slices/authSlice'
 
 // RxCopy
 const Homemain = () => {
   const { loading, profile } = useSelector((store) => store.profile)
+  const { username: getUsername, userCookie } = useSelector(
+    (store) => store.auth
+  )
   const { textCopied } = useSelector((store) => store.actions)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { username } = profile
-  const currentUrl = `${window.origin}/${username}`
+  const currentUrl = `${window.origin}/${getUsername || username}`
 
   useEffect(() => {
     dispatch(getProfileLogs())
@@ -49,7 +53,7 @@ const Homemain = () => {
       ) : (
         <>
           <img src={Logo} alt='logo' />
-          <h3>{username} Profile</h3>
+          <h3>{getUsername || username} Profile</h3>
           <div className='link-board'>
             <p className='link-name'>{currentUrl}</p>
             <div
@@ -63,7 +67,7 @@ const Homemain = () => {
             {homeData.map((value, index) => {
               const { icon, activeIcon, id, title, link } = value
               return (
-                <Link to={link} className='nav-btn-container'>
+                <Link to={link} key={id} className='nav-btn-container'>
                   <div className='nav-btn' key={id}>
                     <div className='nav-icon'>{icon}</div>
                     <p className='nav-title'>{title}</p>

@@ -5,6 +5,8 @@ import AlertSuccess from './alertSuccess'
 import AlertError from './alertError'
 import NoSearchResult from './NoSearchResult'
 import paginator from './pagination'
+import ProtectPasswordToken from './ProtectPasswordToken'
+import ProtectPasswordReset from './ProtectPasswordReset'
 
 export {
   ProtectedRoute,
@@ -14,4 +16,6 @@ export {
   AlertSuccess,
   NoSearchResult,
   paginator,
+  ProtectPasswordToken,
+  ProtectPasswordReset,
 }

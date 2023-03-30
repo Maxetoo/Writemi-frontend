@@ -75,6 +75,12 @@ const Wrapper = styled.section`
     margin-top: 2rem;
     padding-bottom: 7rem;
   }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+  }
 `
 
 export default Draft

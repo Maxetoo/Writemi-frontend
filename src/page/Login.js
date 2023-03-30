@@ -37,16 +37,11 @@ const Login = () => {
     if (isError) {
       const timer = setTimeout(() => {
         dispatch(alertErrorKill())
-      }, 3000)
+      }, 5000)
       return () => clearTimeout(timer)
     }
   }, [isError])
 
-  // const navigateToHome = () => {
-  //   if (isAuthenticated) {
-  //     navigate('/home')
-  //   }
-  // }
   return (
     <Wrapper>
       <img src={HalfLogo} alt='writeme-logo' />
@@ -250,6 +245,8 @@ const Wrapper = styled.section`
 
   a > .forgot-password {
     margin-top: 1.5rem;
+    color: #0000ff;
+    font-weight: 500;
   }
 
   .login-desc {

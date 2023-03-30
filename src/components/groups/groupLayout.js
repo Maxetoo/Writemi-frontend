@@ -4,16 +4,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { getSingleGroup, toggleGroupModal } from '../../slices/groupMsgSlice'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { getGroupMessages } from '../../slices/singleGroupSlice'
 
 const GroupLayout = ({ name, image, description, _id }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   return (
     <Wrapper>
-      <img src={image} alt={name} onClick={() => navigate(`/groups/${_id}`)} />
+      <img
+        className='group-img'
+        src={image}
+        alt={name}
+        onClick={() => {
+          navigate(`/groups/${_id}`)
+          dispatch(getGroupMessages(_id))
+        }}
+      />
       <div
         className='text-desc-container'
-        onClick={() => navigate(`/groups/${_id}`)}
+        onClick={() => {
+          navigate(`/groups/${_id}`)
+          dispatch(getGroupMessages(_id))
+        }}
       >
         <h3>{name}</h3>
         <p className='desc-texts'>{description}</p>
@@ -28,27 +40,14 @@ const GroupLayout = ({ name, image, description, _id }) => {
         >
           <HiOutlineDotsVertical />
         </div>
-        {/* <p className='date'>mon 24th</p> */}
       </div>
-      {/* <div className='layout-container'>
-        <div className='container-header'>
-          <h3>{name}</h3>
-        </div>
-        <p>{description}</p>
-      </div>
-      <div className='options-right-cont'>
-        <div className='menu-icon'>
-          <HiOutlineDotsVertical />
-        </div>
-        <p className='dates'>mon 24th, 2:30pm</p>
-      </div> */}
     </Wrapper>
   )
 }
 
 const Wrapper = styled.article`
   width: 80%;
-  height: 100px;
+  height: 120px;
   border-radius: 5px;
   text-align: center;
   background: #435c6d;
@@ -60,19 +59,20 @@ const Wrapper = styled.article`
   justify-content: space-between;
   padding: 1rem;
   cursor: pointer;
+  overflow: hidden;
+  border: solid 1px #000;
 
-  img {
+  .group-img {
     height: 100%;
-    width: 20%;
-    background: #f5f5f5;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 35%;
+    background: #435c6d;
+    object-fit: contain;
   }
 
   .text-desc-container {
     height: 80px;
     width: calc(90% - (10% + 22%));
-    margin-left: 1rem;
+    margin-left: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -105,8 +105,13 @@ const Wrapper = styled.article`
   p {
     width: 80%;
     margin-top: 0.5rem;
-    font-size: 0.8em;
+    font-size: 0.75em;
     text-align: start;
+    opacity: 0.8;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 50%;
   }
 `
 export default GroupLayout

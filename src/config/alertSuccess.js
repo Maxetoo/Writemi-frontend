@@ -12,9 +12,7 @@ const AlertSuccess = ({ message }) => {
           <BsFillCheckCircleFill className='success-icon' />
           <p className='alert-texts'>{message}</p>
         </div>
-        <div className='exit-btn'>
-          <ImCross />
-        </div>
+        <div className='exit-btn'>{/* <ImCross /> */}</div>
       </div>
     </Wrapper>
   )

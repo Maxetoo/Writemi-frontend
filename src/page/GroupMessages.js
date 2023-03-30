@@ -223,6 +223,12 @@ const Wrapper = styled.section`
     color: var(--white-col);
     cursor: pointer;
   }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+  }
 `
 
 export default GroupMessages

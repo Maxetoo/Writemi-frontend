@@ -276,6 +276,20 @@ const Wrapper = styled.section`
   .loading-btn {
     opacity: 0.75;
   }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+
+    form {
+      width: 50%;
+    }
+
+    button {
+      width: 50%;
+    }
+  }
 `
 
 export default AccountSetting

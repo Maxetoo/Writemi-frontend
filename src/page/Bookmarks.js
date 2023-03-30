@@ -328,5 +328,15 @@ const Wrapper = styled.section`
     font-size: 1.2em;
     color: #0e0e0e;
   }
+
+  @media only screen and (min-width: 768px) {
+    .header {
+      padding: 0rem 3rem 0rem 10rem;
+    }
+
+    .pagination {
+      width: 300px;
+    }
+  }
 `
 export default Bookmarks
