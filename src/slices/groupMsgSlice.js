@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { URL } from '../paths/url'
 
 export const getGroups = createAsyncThunk(
   'actions/getGroups',
@@ -7,7 +8,7 @@ export const getGroups = createAsyncThunk(
     const { searchValue } = thunkApi.getState().actions
     try {
       const resp = await axios.get(
-        `/api/v1/group?search=${searchValue}&page=1`,
+        `${URL}/api/v1/group?search=${searchValue}&page=1`,
         {
           withCredentials: true,
         }
@@ -26,12 +27,11 @@ export const getGroups = createAsyncThunk(
 export const uploadGroupImage = createAsyncThunk(
   'actions/uploadGroupImage',
   async (payload, thunkApi) => {
-    // const {image} = thunkApi.getState().groups
     try {
       const {
         data: { image },
       } = await axios.post(
-        `/api/v1/group/space/uploadImage`,
+        `${URL}/api/v1/group/space/uploadImage`,
         {
           image: payload,
         },
@@ -61,7 +61,7 @@ export const createGroupSpace = createAsyncThunk(
 
     try {
       const resp = await axios.post(
-        '/api/v1/group/space',
+        `${URL}/api/v1/group/space`,
         {
           name,
           description,
@@ -88,7 +88,7 @@ export const getSingleGroup = createAsyncThunk(
   'actions/getSingleGroup',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.get(`/api/v1/group/getGroup/${payload}`, {
+      const resp = await axios.get(`${URL}/api/v1/group/getGroup/${payload}`, {
         withCredentials: true,
       })
       return { response: resp.data, status: 'success' }
@@ -106,7 +106,7 @@ export const deleteGroup = createAsyncThunk(
   'actions/deleteGroup',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(`/api/v1/group/space/${payload}`, {
+      const resp = await axios.delete(`${URL}/api/v1/group/space/${payload}`, {
         withCredentials: true,
       })
       thunkAPI.dispatch(toggleGroupModal())
@@ -128,7 +128,7 @@ export const editGroup = createAsyncThunk(
     const { name, description, image, _id } = payload
     try {
       const resp = await axios.patch(
-        `/api/v1/group/space/${_id}`,
+        `${URL}/api/v1/group/space/${_id}`,
         {
           name,
           description,
@@ -154,7 +154,7 @@ export const clearAllBookmarks = createAsyncThunk(
   'actions/clearGroups',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(`/api/v1/group/space/clearSpaces`, {
+      const resp = await axios.delete(`${URL}/api/v1/group/space/clearSpaces`, {
         withCredentials: true,
       })
       thunkAPI.dispatch(getGroups())

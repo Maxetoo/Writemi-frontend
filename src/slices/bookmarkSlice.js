@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { URL } from '../paths/url'
 
 export const addToBookmark = createAsyncThunk(
   'actions/addBookmark',
@@ -7,7 +8,7 @@ export const addToBookmark = createAsyncThunk(
     const { message, source, link } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/bookmark/addToBookmark',
+        `${URL}/api/v1/bookmark/addToBookmark`,
         {
           source,
           message,
@@ -36,7 +37,7 @@ export const getBookmarks = createAsyncThunk(
 
     try {
       const resp = await axios.get(
-        `/api/v1/bookmark/getBookmarks?search=${searchValue}&page=${currentPage}`,
+        `${URL}/api/v1/bookmark/getBookmarks?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -57,7 +58,7 @@ export const deleteBookmark = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const resp = await axios.delete(
-        `/api/v1/bookmark/deleteBookmark/${payload}`,
+        `${URL}/api/v1/bookmark/deleteBookmark/${payload}`,
         {
           withCredentials: true,
         }
@@ -80,7 +81,7 @@ export const clearAllBookmarks = createAsyncThunk(
   'actions/clearBookmarks',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(`/api/v1/bookmark/clearBookmarks`, {
+      const resp = await axios.delete(`${URL}/api/v1/bookmark/clearBookmarks`, {
         withCredentials: true,
       })
       thunkAPI.dispatch(getBookmarks())

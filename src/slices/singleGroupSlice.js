@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { URL } from '../paths/url'
 
 const initialState = {
   messageEntries: [],
@@ -26,7 +27,7 @@ export const getGroupMessages = createAsyncThunk(
     const { currentPage } = thunkApi.getState().groupMessages
     try {
       const resp = await axios.get(
-        `/api/v1/singleGroup/getMessages/${payload}?search=${searchValue}&page=${currentPage}`,
+        `${URL}/api/v1/singleGroup/getMessages/${payload}?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -49,7 +50,7 @@ export const createGroupMessage = createAsyncThunk(
     // const { searchValue } = thunkApi.getState().actions
     try {
       const resp = await axios.post(
-        `/api/v1/singleGroup/addMessage/${_id}`,
+        `${URL}/api/v1/singleGroup/addMessage/${_id}`,
         {
           message,
         },
@@ -76,7 +77,7 @@ export const flagGroupMessage = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const resp = await axios.patch(
-        `/api/v1/singleGroup/reportMessage/${payload}`,
+        `${URL}/api/v1/singleGroup/reportMessage/${payload}`,
         {
           withCredentials: true,
         }
@@ -99,7 +100,7 @@ export const getGroupReports = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const resp = await axios.get(
-        `/api/v1/singleGroup/getReports/${payload}`,
+        `${URL}/api/v1/singleGroup/getReports/${payload}`,
         {
           withCredentials: true,
         }

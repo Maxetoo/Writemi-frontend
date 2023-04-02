@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { URL } from '../paths/url'
 
-// "username": "maxeto123",
-// "password": "root123",
-// "email": "etomax@gmail.com"
 const initialState = {
   loading: false,
   isError: false,
@@ -36,7 +34,7 @@ export const getPersonalMessages = createAsyncThunk(
     const { currentPage } = thunkApi.getState().messages
     try {
       const resp = await axios.get(
-        `/api/v1/personal?search=${searchValue}&page=${currentPage}`,
+        `${URL}/api/v1/personal?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -56,7 +54,7 @@ export const deletePersonalMessage = createAsyncThunk(
   'action/delete',
   async (payload, thunkApi) => {
     try {
-      const resp = await axios.delete(`/api/v1/personal/${payload}`, {
+      const resp = await axios.delete(`${URL}/api/v1/personal/${payload}`, {
         withCredentials: true,
       })
       thunkApi.dispatch(getPersonalMessages())
@@ -79,7 +77,7 @@ export const createPersonalMessage = createAsyncThunk(
     const { username, message } = payload
     try {
       const resp = await axios.post(
-        `/api/v1/personal?username=${username}`,
+        `${URL}/api/v1/personal?username=${username}`,
         {
           message,
         },
@@ -103,7 +101,7 @@ export const clearAllPersonalMessages = createAsyncThunk(
   'actions/clearPersonalMessages',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(`/api/v1/personal/clearMessages`, {
+      const resp = await axios.delete(`${URL}/api/v1/personal/clearMessages`, {
         withCredentials: true,
       })
       thunkAPI.dispatch(getPersonalMessages())

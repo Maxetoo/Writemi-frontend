@@ -1,19 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { FaGlasses } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-// "proxy": "",
-
-// const addUsernameToStorage = () => {
-//   const username = localStorage.getItem('username')
-//   if (username) {
-//     return JSON.parse(localStorage.getItem('username'))
-//   } else {
-//     return ''
-//   }
-// }
+import { URL } from '../paths/url'
 
 const initialState = {
   loginPasswordVisible: false,
@@ -85,7 +73,7 @@ export const userSignup = createAsyncThunk(
     const { username, password, email } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/register',
+        `${URL}/api/v1/auth/register`,
         {
           username,
           password,
@@ -113,7 +101,7 @@ export const forgotPassword = createAsyncThunk(
     const { email } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/forgotPassword',
+        `${URL}/api/v1/auth/forgotPassword`,
         {
           email,
         },
@@ -138,7 +126,7 @@ export const confirmOTP = createAsyncThunk(
     const { token } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/confirmToken',
+        `${URL}/api/v1/auth/confirmToken`,
         {
           token,
         },
@@ -163,7 +151,7 @@ export const resetPassword = createAsyncThunk(
     const { password, confirmPassword } = payload
     try {
       const resp = await axios.patch(
-        '/api/v1/auth/changePassword',
+        `${URL}/api/v1/auth/changePassword`,
         {
           password,
           confirmPassword,
@@ -260,7 +248,6 @@ const authSlice = createSlice({
       .addCase(userLogin.fulfilled, (state, action) => {
         state.loading = false
         const { status, code, response } = action.payload
-        console.log(response)
         if (code === 500) {
           state.isError = true
           state.errorMessage = `Can't login due to network`
