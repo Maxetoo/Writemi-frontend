@@ -23,6 +23,10 @@ const initialState = {
   loginEntries: [],
   signupEntries: [],
   loading: false,
+  loginLoad: false,
+  loginError: false,
+  signupLoad: false,
+  signupError: false,
   forgotPasswordLoad: false,
   forgotPasswordError: false,
   confirmOTPLoad: false,
@@ -242,26 +246,26 @@ const authSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(userLogin.pending, (state, action) => {
-        state.loading = true
-        state.isError = false
+        state.loginLoad = true
+        state.loginError = false
       })
       .addCase(userLogin.fulfilled, (state, action) => {
         state.loading = false
         const { status, code, response } = action.payload
         if (code === 500) {
-          state.isError = true
+          state.loginError = true
           state.errorMessage = `Can't login due to network`
         } else if (status === 'success') {
           state.isAuthenticated = true
           state.loginEntries = response.user
           state.username = response.user.username
         } else {
-          state.isError = true
+          state.loginError = true
           state.errorMessage = response.msg
         }
       })
       .addCase(userLogin.rejected, (state, action) => {
-        state.loading = false
+        state.loginLoad = false
       })
       .addCase(userSignup.pending, (state, action) => {
         state.loading = true

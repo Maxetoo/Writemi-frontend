@@ -21,8 +21,10 @@ const Login = () => {
   const {
     loginPasswordVisible,
     loginInputs: { username, password },
-    isError,
-    loading,
+    // isError,
+    // loading,
+    loginLoad,
+    loginError,
     errorMessage,
     // entries,
     // isAuthenticated,
@@ -34,20 +36,20 @@ const Login = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isError) {
+    if (loginError) {
       const timer = setTimeout(() => {
         dispatch(alertErrorKill())
       }, 5000)
       return () => clearTimeout(timer)
     }
-  }, [isError])
+  }, [loginError])
 
   return (
     <Wrapper>
       <img src={HalfLogo} alt='writeme-logo' />
       <h2>Welcome</h2>
       <p className='sign'>sign in to continue</p>
-      {isError && (
+      {loginError && (
         <div className='alert-container'>
           <p className='alert-texts'>{errorMessage}</p>
           <div className='exit-btn'>
@@ -109,7 +111,7 @@ const Login = () => {
         onClick={() => {
           dispatch(userLogin({ username, password }))
         }}
-        className={loading ? 'loading-btn' : ''}
+        className={loginLoad ? 'loading-btn' : ''}
       >
         Login
       </button>
