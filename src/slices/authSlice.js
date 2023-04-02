@@ -46,7 +46,7 @@ export const userLogin = createAsyncThunk(
     const { username, password } = payload
     try {
       const resp = await axios.post(
-        '/api/v1/auth/login',
+        `${URL}/api/v1/auth/login`,
         {
           username,
           password,
