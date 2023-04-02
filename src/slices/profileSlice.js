@@ -19,12 +19,9 @@ export const userLogout = createAsyncThunk(
   'actions/logout',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.post(
-        'https://writemi.onrender.com/api/v1/auth/logout',
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.post('/api/v1/auth/logout', {
+        withCredentials: true,
+      })
       window.location.href = '/login'
       return { response: resp.data, status: 'success' }
     } catch (error) {
@@ -41,12 +38,9 @@ export const getProfileLogs = createAsyncThunk(
   'actions/getProfileLogs',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.get(
-        'https://writemi.onrender.com/api/v1/user/getProfile',
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.get('/api/v1/user/getProfile', {
+        withCredentials: true,
+      })
       return { response: resp.data, status: 'success' }
     } catch (error) {
       return {
@@ -65,7 +59,7 @@ export const editProfile = createAsyncThunk(
     console.log(username, email)
     try {
       const resp = await axios.patch(
-        'https://writemi.onrender.com/api/v1/user/editProfile',
+        '/api/v1/user/editProfile',
         {
           username,
           email,

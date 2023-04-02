@@ -7,7 +7,7 @@ export const addToBookmark = createAsyncThunk(
     const { message, source, link } = payload
     try {
       const resp = await axios.post(
-        'https://writemi.onrender.com/api/v1/bookmark/addToBookmark',
+        '/api/v1/bookmark/addToBookmark',
         {
           source,
           message,
@@ -36,7 +36,7 @@ export const getBookmarks = createAsyncThunk(
 
     try {
       const resp = await axios.get(
-        `https://writemi.onrender.com/api/v1/bookmark/getBookmarks?search=${searchValue}&page=${currentPage}`,
+        `/api/v1/bookmark/getBookmarks?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -57,7 +57,7 @@ export const deleteBookmark = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const resp = await axios.delete(
-        `https://writemi.onrender.com/api/v1/bookmark/deleteBookmark/${payload}`,
+        `/api/v1/bookmark/deleteBookmark/${payload}`,
         {
           withCredentials: true,
         }
@@ -80,12 +80,9 @@ export const clearAllBookmarks = createAsyncThunk(
   'actions/clearBookmarks',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(
-        `https://writemi.onrender.com/api/v1/bookmark/clearBookmarks`,
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.delete(`/api/v1/bookmark/clearBookmarks`, {
+        withCredentials: true,
+      })
       thunkAPI.dispatch(getBookmarks())
       return { response: resp.data, status: 'success' }
     } catch (error) {

@@ -26,7 +26,7 @@ export const getGroupMessages = createAsyncThunk(
     const { currentPage } = thunkApi.getState().groupMessages
     try {
       const resp = await axios.get(
-        `https://writemi.onrender.com/api/v1/singleGroup/getMessages/${payload}?search=${searchValue}&page=${currentPage}`,
+        `/api/v1/singleGroup/getMessages/${payload}?search=${searchValue}&page=${currentPage}`,
         {
           withCredentials: true,
         }
@@ -49,7 +49,7 @@ export const createGroupMessage = createAsyncThunk(
     // const { searchValue } = thunkApi.getState().actions
     try {
       const resp = await axios.post(
-        `https://writemi.onrender.com/api/v1/singleGroup/addMessage/${_id}`,
+        `/api/v1/singleGroup/addMessage/${_id}`,
         {
           message,
         },
@@ -76,7 +76,7 @@ export const flagGroupMessage = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const resp = await axios.patch(
-        `https://writemi.onrender.com/api/v1/singleGroup/reportMessage/${payload}`,
+        `/api/v1/singleGroup/reportMessage/${payload}`,
         {
           withCredentials: true,
         }
@@ -99,7 +99,7 @@ export const getGroupReports = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const resp = await axios.get(
-        `https://writemi.onrender.com/api/v1/singleGroup/getReports/${payload}`,
+        `/api/v1/singleGroup/getReports/${payload}`,
         {
           withCredentials: true,
         }

@@ -7,7 +7,7 @@ export const getGroups = createAsyncThunk(
     const { searchValue } = thunkApi.getState().actions
     try {
       const resp = await axios.get(
-        `https://writemi.onrender.com/api/v1/group?search=${searchValue}&page=1`,
+        `/api/v1/group?search=${searchValue}&page=1`,
         {
           withCredentials: true,
         }
@@ -31,7 +31,7 @@ export const uploadGroupImage = createAsyncThunk(
       const {
         data: { image },
       } = await axios.post(
-        `https://writemi.onrender.com/api/v1/group/space/uploadImage`,
+        `/api/v1/group/space/uploadImage`,
         {
           image: payload,
         },
@@ -61,7 +61,7 @@ export const createGroupSpace = createAsyncThunk(
 
     try {
       const resp = await axios.post(
-        'https://writemi.onrender.com/api/v1/group/space',
+        '/api/v1/group/space',
         {
           name,
           description,
@@ -88,12 +88,9 @@ export const getSingleGroup = createAsyncThunk(
   'actions/getSingleGroup',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.get(
-        `https://writemi.onrender.com/api/v1/group/getGroup/${payload}`,
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.get(`/api/v1/group/getGroup/${payload}`, {
+        withCredentials: true,
+      })
       return { response: resp.data, status: 'success' }
     } catch (error) {
       return {
@@ -109,12 +106,9 @@ export const deleteGroup = createAsyncThunk(
   'actions/deleteGroup',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(
-        `https://writemi.onrender.com/api/v1/group/space/${payload}`,
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.delete(`/api/v1/group/space/${payload}`, {
+        withCredentials: true,
+      })
       thunkAPI.dispatch(toggleGroupModal())
       thunkAPI.dispatch(getGroups())
       return { response: resp.data, status: 'success' }
@@ -134,7 +128,7 @@ export const editGroup = createAsyncThunk(
     const { name, description, image, _id } = payload
     try {
       const resp = await axios.patch(
-        `https://writemi.onrender.com/api/v1/group/space/${_id}`,
+        `/api/v1/group/space/${_id}`,
         {
           name,
           description,
@@ -160,12 +154,9 @@ export const clearAllBookmarks = createAsyncThunk(
   'actions/clearGroups',
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios.delete(
-        `https://writemi.onrender.com/api/v1/group/space/clearSpaces`,
-        {
-          withCredentials: true,
-        }
-      )
+      const resp = await axios.delete(`/api/v1/group/space/clearSpaces`, {
+        withCredentials: true,
+      })
       thunkAPI.dispatch(getGroups())
       return { response: resp.data, status: 'success' }
     } catch (error) {
