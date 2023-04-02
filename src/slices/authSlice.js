@@ -216,6 +216,7 @@ const authSlice = createSlice({
     },
     alertErrorKill: (state, action) => {
       state.isError = false
+      state.loginError = false
     },
 
     killForgotPasswordAlert: (state, action) => {
@@ -250,7 +251,7 @@ const authSlice = createSlice({
         state.loginError = false
       })
       .addCase(userLogin.fulfilled, (state, action) => {
-        state.loading = false
+        state.loginLoad = false
         const { status, code, response } = action.payload
         if (code === 500) {
           state.loginError = true
