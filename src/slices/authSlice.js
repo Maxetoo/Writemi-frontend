@@ -39,8 +39,8 @@ const initialState = {
   loginSuccess: false,
   signupSuccess: false,
   passwordResetSuccessful: false,
-  userCookie: document.cookie.startsWith('token'),
-  validEmail: document.cookie.startsWith('validEmail'),
+  userCookie: Cookies.get('token') && true,
+  validEmail: Cookies.get('validEmail') && true,
   validToken: Cookies.get('validToken') && true,
 }
 
@@ -50,7 +50,7 @@ export const userLogin = createAsyncThunk(
     const { username, password } = payload
     try {
       const resp = await axios.post(
-        `${URL}/api/v1/auth/login`,
+        `https://writemi.onrender.com/api/v1/auth/login`,
         {
           username,
           password,
