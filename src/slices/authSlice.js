@@ -59,6 +59,7 @@ export const userLogin = createAsyncThunk(
           withCredentials: true,
         }
       )
+      Cookies.set('token', resp.data.login_cookie)
       window.location.href = '/home'
       return { response: resp.data, status: 'success' }
     } catch (error) {
