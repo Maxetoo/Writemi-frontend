@@ -56,7 +56,6 @@ export const userLogin = createAsyncThunk(
           password,
         },
         {
-          baseURL: 'http://writemi-frontend.vercel.app',
           withCredentials: true,
           credentials: 'include',
         }
