@@ -50,16 +50,23 @@ export const userLogin = createAsyncThunk(
     const { username, password } = payload
     try {
       const resp = await axios.post(
-        `https://writemi.onrender.com/api/v1/auth/login`,
+        `${URL}/api/v1/auth/login`,
         {
           username,
           password,
         },
         {
+          baseURL: 'http://writemi-frontend.vercel.app',
           withCredentials: true,
+          credentials: 'include',
         }
       )
-      Cookies.set('token', resp.data.login_cookie)
+      console.log(resp.data.login_cookie)
+      const { name, value, expires, httpOnly, signed, secure, sameSite } =
+        resp.data.login_cookie
+      // document.cookie = name + '=' + value + '; ' + expires + '; path=/'
+      // Cookies.set(name, value, { expires, sameSite, secure, signed, httpOnly })
+      // Cookies.set('token', resp.data.login_cookie)
       window.location.href = '/home'
       return { response: resp.data, status: 'success' }
     } catch (error) {
